@@ -40,22 +40,22 @@ export interface ICampaign {
 export class CampaignsDataService {
   constructor(private http: HttpClient) {}
 
-  // public campaignsList$: Observable<ICampaign[]> =
-  //   this.getCampaigns<ICampaignsResponse>(`${SERVER_URL}/Campaigns/Get`).pipe(
-  //     map((response: ICampaignsResponse) => {
-  //       return response.campaigns.map((serverCampaign: IServerCampaign) => {
-  //         return this.toLocalCampaign(serverCampaign);
-  //       });
-  //     })
-  //   );
-
+  private _cacheTimeStamp: number | null = null;
   private _campaignsList: ICampaign[] | null = null;
+  private isCacheValid(): boolean {
+    if (this._cacheTimeStamp && Date.now() - this._cacheTimeStamp < 300000) {
+      // 5 minutes in milliseconds
+      return true;
+    }
+    return false;
+  }
 
   public get campaignsListCached$(): Observable<ICampaign[]> {
-    if (!this._campaignsList) {
+    if (!this._campaignsList || !this.isCacheValid()) {
       return this.getCampaigns<Object>(`${SERVER_URL}/Campaigns/Get`).pipe(
         tap((response: Object) => {
           this._campaignsList = [];
+          this._cacheTimeStamp = Date.now();
           _.forEach(response, (val) => {
             this._campaignsList?.push(this.toLocalCampaign(val));
           });
