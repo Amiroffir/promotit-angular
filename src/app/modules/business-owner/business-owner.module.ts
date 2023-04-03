@@ -9,6 +9,7 @@ import { ChosenCampaignPage } from '../campaigns/pages/chosen-campaign/chosen-ca
 import { CampaignsModule } from '../campaigns/campaigns.module';
 import { PendingDeliveriesPage } from './pages/pending-deliveries/pending-deliveries.page';
 import { BusinessRoutes } from './enums/businessRoutes.enum';
+import { CampaignsDataService } from '../campaigns/services/campaigns-data.service';
 
 const routes: Routes = [
   { path: BusinessRoutes.businessDashboard, component: BusinessDashboard },

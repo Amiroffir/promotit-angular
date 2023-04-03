@@ -1,5 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ICampaign } from 'src/app/modules/campaigns/services/campaigns-data.service';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
+
+interface ICardDetails {
+  id: string;
+  userRole: string;
+  title: string;
+  url?: string;
+  imgUrl?: string;
+}
 
 @Component({
   selector: 'system-card',
@@ -8,18 +18,26 @@ import { LocalStorageService } from 'src/app/services/local-stroage.service';
 })
 export class SystemCardComponent {
   constructor() {}
-  @Input() id: string = '';
+  @Input() id: number = 0;
   @Input() userRole: string = '';
-  @Input() title: string = '';
-  @Input() url: string = '';
-  @Input() imgUrl: string = '';
+  @Input() cardType: string = ''; // Will be used to determine if product/campaign
+  @Input() cardDetails: ICampaign = {
+    id: 0,
+    campaignName: '',
+    campaignDesc: '',
+    campaignHash: ' ',
+    campaignUrl: '',
+    donationsAmount: 0,
+    image: ',',
+    nonProfitRepID: '',
+  };
 
   @Output() cardButtonClicked: EventEmitter<string> =
     new EventEmitter<string>();
   // Or you can use this way
-  // @Input() system:Object = {'id':'','userRole':'','title':'','url':'','imgUrl':''};
+  //
 
-  public onCardButtonClicked(id: string): void {
-    this.cardButtonClicked.emit(this.id);
+  public onCardButtonClicked(id: number): void {
+    this.cardButtonClicked.emit(this.cardDetails.id.toString());
   }
 }

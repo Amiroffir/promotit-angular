@@ -17,6 +17,6 @@
   <h1 class="campaigns-headline">Running Campaigns</h1>
   <div class="running-campaigns flex">
     <!-- Should be added [cardItems]="campaigns" input from the dashboard component -->
-    <cards-list></cards-list>
+    <cards-list [cardItems$]="campaignsList$" cardType="campaign"></cards-list>
   </div>
 </div>
