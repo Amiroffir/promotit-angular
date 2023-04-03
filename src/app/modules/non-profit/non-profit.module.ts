@@ -6,11 +6,25 @@ import { SharedModule } from '../shared/shared.module';
 import { MyCampaignsPage } from './pages/my-campaigns/my-campaigns.page';
 import { CampaignsModule } from '../campaigns/campaigns.module';
 import { AddCampaignComponent } from '../campaigns/components/add-campaign/add-campaign.component';
+import { NonProfitAuthGuard } from './guards/non-profit-auth.guard';
+import { NonProfitRoutes } from './enums/nonProfitRoutes.enum';
 
 const routes: Routes = [
-  { path: '', component: NonProfitDashboard },
-  { path: 'my-campaigns', component: MyCampaignsPage },
-  { path: 'add-campaign', component: AddCampaignComponent },
+  {
+    path: NonProfitRoutes.nonProfitDashboard,
+    component: NonProfitDashboard,
+    canActivate: [NonProfitAuthGuard],
+  },
+  {
+    path: NonProfitRoutes.myCampaignsPage,
+    component: MyCampaignsPage,
+    canActivate: [NonProfitAuthGuard],
+  },
+  {
+    path: NonProfitRoutes.addCampaign,
+    component: AddCampaignComponent,
+    canActivate: [NonProfitAuthGuard],
+  },
 ];
 
 @NgModule({

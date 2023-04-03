@@ -5,10 +5,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { CampaignsModule } from '../campaigns/campaigns.module';
 import { ChosenCampaignPage } from '../campaigns/pages/chosen-campaign/chosen-campaign.component';
+import { SocialRoutes } from './enums/socialRoutes.enum';
+import { SocialActAuthGuard } from './guards/social-act-auth.guard';
 
 const routes: Routes = [
-  { path: '', component: SocialActDashboard },
-  { path: 'social-activist/:id', component: ChosenCampaignPage },
+  { path: SocialRoutes.socialActivistDashboard, component: SocialActDashboard },
+  {
+    path: SocialRoutes.chosenCampaignPage,
+    component: ChosenCampaignPage,
+    canActivate: [SocialActAuthGuard],
+  },
 ];
 @NgModule({
   declarations: [SocialActDashboard],

@@ -8,16 +8,17 @@ import { SharedModule } from '../shared/shared.module';
 import { ChosenCampaignPage } from '../campaigns/pages/chosen-campaign/chosen-campaign.component';
 import { CampaignsModule } from '../campaigns/campaigns.module';
 import { PendingDeliveriesPage } from './pages/pending-deliveries/pending-deliveries.page';
+import { BusinessRoutes } from './enums/businessRoutes.enum';
 
 const routes: Routes = [
-  { path: '', component: BusinessDashboard },
+  { path: BusinessRoutes.businessDashboard, component: BusinessDashboard },
   {
-    path: 'business-owner/:id',
+    path: BusinessRoutes.chosenCampaignPage,
     component: ChosenCampaignPage,
     canActivate: [BusinessAuthGuard],
   },
   {
-    path: 'pending-deliveries',
+    path: BusinessRoutes.pendingDeliveriesPage,
     component: PendingDeliveriesPage,
     canActivate: [BusinessAuthGuard],
   },

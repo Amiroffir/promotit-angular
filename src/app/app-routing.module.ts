@@ -9,22 +9,22 @@ import { ThankYouComponent } from './modules/UserAuth/components/thank-you/thank
 import { UserNavigatorComponent } from './modules/UserAuth/components/user-navigator/user-navigator.component';
 import { UnauthorizedUserComponent } from './modules/UserAuth/pages/unauthorized-user/unauthorized-user.page';
 import { UserAuthModule } from './modules/UserAuth/user-auth.module';
+import { AppRoutes } from './constants/route.constants';
 
 const routes: Routes = [
-  { path: '', component: UserNavigatorComponent, pathMatch: 'full' },
   // { path: 'about', component: ToImplement },
   // {path: 'contact-us', component: ToImplement},
-  { path: 'unauthorized', component: UnauthorizedUserComponent },
-  { path: 'thank-you', component: ThankYouComponent },
-  { path: 'get-role', component: LoadingComponent },
+  { path: AppRoutes.unauthorized, component: UnauthorizedUserComponent },
+  { path: AppRoutes.thankYou, component: ThankYouComponent },
+  { path: AppRoutes.getRole, component: LoadingComponent },
   {
-    path: 'admin',
+    path: AppRoutes.admin,
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
     canActivate: [AdminAuthGuard],
   },
   {
-    path: 'non-profit',
+    path: AppRoutes.nonProfit,
     loadChildren: () =>
       import('./modules/non-profit/non-profit.module').then(
         (m) => m.NonProfitModule
@@ -32,7 +32,7 @@ const routes: Routes = [
     canActivate: [NonProfitAuthGuard],
   },
   {
-    path: 'social-activist',
+    path: AppRoutes.socialActivist,
     loadChildren: () =>
       import('./modules/social-activist/social-activist.module').then(
         (m) => m.SocialActivistModule
@@ -40,12 +40,17 @@ const routes: Routes = [
     canActivate: [SocialActAuthGuard],
   },
   {
-    path: 'business-owner',
+    path: AppRoutes.businessOwner,
     loadChildren: () =>
       import('./modules/business-owner/business-owner.module').then(
         (m) => m.BusinessOwnerModule
       ),
     canActivate: [BusinessAuthGuard],
+  },
+  {
+    path: AppRoutes.userNavigator,
+    component: UserNavigatorComponent,
+    pathMatch: 'full',
   },
 ];
 

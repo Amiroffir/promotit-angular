@@ -1,9 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, filter, map, Observable, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  EMPTY,
+  filter,
+  map,
+  Observable,
+  switchMap,
+  take,
+  throwError,
+} from 'rxjs';
 import { SERVER_URL } from 'src/app/global-env';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
+import { tap } from 'underscore';
+
+///////////////////////////////
+// Have to try to change this service to isReady/OnReady pattern.
+// Example: in Iliya git repo "authentificationService.ts"
+
+export interface Role {
+  id: string;
+  name: string;
+  description: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -38,9 +59,14 @@ export class Auth0Service {
   public isCurrentRole(roleToCheck: string): boolean {
     return this._role === roleToCheck ? true : false;
   }
-
   public getUserRoles(userID: string | undefined): Observable<any> {
-    return this.http.get(`${SERVER_URL}/roles/${userID}`);
+    return this.http.get(`${SERVER_URL}/roles/${userID}`).pipe(
+      take(1),
+      catchError((err) => {
+        console.error(err);
+        return []; // Return empty array if error occurs to redirect to login page
+      })
+    );
   }
 
   public login(): void {
@@ -53,19 +79,26 @@ export class Auth0Service {
   }
 
   private handleAuthUser(): void {
-    this.auth.user$.subscribe((user) => {
+    this.auth.user$.pipe(take(1)).subscribe((user: User | null | undefined) => {
       if (user) {
-        this.localStorage.set('user', user);
         this._isAuthenticated = true;
-        this.getUserRoles(user.sub).subscribe((roles) => {
-          if (roles.length === 0) {
+        this.getUserRoles(user.sub).subscribe({
+          next: (roles: Role[]) => {
+            if (roles.length === 0) {
+              this._role = 'unknown';
+            } else {
+              this._role = roles[0].name;
+            }
+          },
+          error: (err) => {
+            console.error(err);
             this._role = 'unknown';
+          },
+          complete: () => {
+            this.localStorage.set('user', user);
             this.localStorage.set('userRole', this._role);
-          } else {
-            this._role = roles[0].name;
-          }
-          this.localStorage.set('userRole', this._role);
-          this.roleSubject.next(this._role);
+            this.roleSubject.next(this._role);
+          },
         });
       }
       this._isAuthenticated = !!user;

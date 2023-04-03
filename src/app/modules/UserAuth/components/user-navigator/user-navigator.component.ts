@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { Auth0Service } from '../../services/auth0.service';
 
 @Component({
@@ -12,7 +13,9 @@ export class UserNavigatorComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.auth.isAuthenticated) {
-      this.auth.role$.subscribe((role) => {
+      this.auth.role$.pipe(take(2)).subscribe((role) => {
+        // It takes 2 values because of the first value is empty string(Default) and the second value is the actual role
+        console.log('role: ', role);
         switch (role) {
           case 'Admin':
             this.router.navigate(['/admin']);

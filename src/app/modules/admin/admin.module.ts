@@ -8,10 +8,15 @@ import { SystemButtonComponent } from 'src/app/modules/shared/components/system-
 import { AppModule } from 'src/app/app.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReportsPage } from './pages/reports-page/reports-page.page';
+import { AdminRoutes } from './enums/adminRoutes.enum';
 
 const routes: Routes = [
-  { path: '', component: AdminDashboard },
-  { path: 'reports/:reportType', component: ReportsPage },
+  { path: AdminRoutes.adminDashboard, component: AdminDashboard },
+  {
+    path: AdminRoutes.reportPageByType,
+    component: ReportsPage,
+    canActivate: [AdminAuthGuard],
+  },
 ]; //,{path: 'user-report', component:ToImplement},{path: 'campaigns-report', component:ToImplement},{path: 'tweets-report', component:ToImplement}];
 
 @NgModule({
