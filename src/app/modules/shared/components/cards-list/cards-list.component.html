@@ -1,0 +1,12 @@
+<div class="cards-list-wrapper flex">
+  <system-card
+    *ngFor="let item of cardItems"
+    [id]="item.id"
+    [title]="item.title"
+    [url]="item.url"
+    [imgUrl]="item.imgUrl"
+    [userRole]="userRole"
+    (cardButtonClicked)="onCardButtonClicked($event)"
+  >
+  </system-card>
+</div>

@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Auth0Service } from './modules/UserAuth/services/auth0.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'promotit-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
 })
-export class AppComponent {
-  title = 'promotit-angular';
+export class AppComponent implements OnInit {
+  constructor(private auth: Auth0Service) {}
+  public ngOnInit(): void {}
+  public logout(): void {
+    this.auth.logout();
+  }
 }

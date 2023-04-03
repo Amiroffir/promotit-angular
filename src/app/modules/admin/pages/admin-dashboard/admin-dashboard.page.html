@@ -1,0 +1,22 @@
+<div class="admin-dash-wrapper flex flex-column">
+  <h1 class="reports-headline">Reports</h1>
+  <div class="reports-btns flex">
+    <system-button
+      [text]="reportTypes.UserReport"
+      [routerLink]="'/reports/' + reportTypes.UserReport"
+    ></system-button>
+    <system-button
+      [text]="reportTypes.CampaignsReport"
+      [routerLink]="'/reports/' + reportTypes.CampaignsReport"
+    ></system-button>
+    <system-button
+      [text]="reportTypes.TweetsReport"
+      [routerLink]="'/reports/' + reportTypes.TweetsReport"
+    ></system-button>
+  </div>
+  <h1 class="campaigns-headline">Running Campaigns</h1>
+  <div class="running-campaigns flex">
+    <!-- Should be added [cardItems]="campaigns" input from the dashboard component -->
+    <cards-list></cards-list>
+  </div>
+</div>

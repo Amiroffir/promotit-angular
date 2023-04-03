@@ -1,0 +1,59 @@
+<div class="menu-container flex flex-column">
+  <ul class="menu-options-list">
+    <li>
+      <a class="menu-link">
+        <div class="icon">
+          <!-- <HomeIcon /> -->
+        </div>
+        <div class="title">Home</div>
+      </a>
+    </li>
+    <li>
+      <a class="menu-link">
+        <div class="icon">
+          <!-- <InfoIcon /> -->
+        </div>
+        <div class="title">About</div>
+      </a>
+    </li>
+    <li>
+      <a class="menu-link">
+        <div>
+          <!-- <CallIcon /> -->
+        </div>
+        <div class="title">Contact Us</div>
+      </a>
+    </li>
+    <li>
+      <a class="menu-link">
+        <div>
+          <!-- <Twitter /> -->
+        </div>
+        <div class="title">Tweets</div>
+      </a>
+    </li>
+
+    <!-- <li *ngIf="role === 'Social Activist'">
+      <a class="menu-link">
+        <div>
+          <Wallet /> 
+        </div>
+        <div class="title">Wallet</div>
+      </a>
+    </li> -->
+
+    <li>
+      <div [innerText]="" class="menu-link">
+        <!-- <FaceIcon /> -->
+      </div>
+    </li>
+    <li>
+      <a class="menu-link">
+        <div>
+          <!-- <Logout /> -->
+        </div>
+        <div class="logout" (click)="logout()">Logout</div>
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,41 @@
+@import "../../../../../flex.less";
+
+.card {
+  width: 290px;
+  font-family: "Rubik", sans-serif !important;
+  max-height: 385px;
+  min-height: 385px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 5px 0px;
+  transition: box-shadow 200ms ease-in-out 0s;
+
+  .card-title {
+    font-weight: 800 !important;
+  }
+  .card:hover {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 5px 0px,
+      rgba(0, 0, 0, 0.12) 0px 3px 14px 3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px;
+  }
+  .card-body {
+    align-items: center;
+    justify-content: center;
+    gap: 2.5em;
+
+    .operation-btn {
+      bottom: 0.85em;
+      border: none;
+      transition: background-color 350ms ease 0s, color 350ms ease 0s,
+        box-shadow 250ms ease 0s, opacity 250ms ease 0s;
+    }
+  }
+  // .operation-btn:hover {
+  //   background-color: #ff9e5b;
+  //   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 5px 0px,
+  //     rgba(0, 0, 0, 0.12) 0px 3px 14px 3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px;
+  //   color: black;
+  // }
+}
+
+.web-link {
+  text-decoration: none;
+  color: black;
+}

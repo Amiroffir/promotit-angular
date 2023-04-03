@@ -1,0 +1,7 @@
+<div class="social-dash-wrapper flex flex-column">
+  <h1 class="campaigns-headline">All Campaigns</h1>
+  <div class="running-campaigns flex">
+    <!-- Should be added [cardItems]="campaigns" input from the dashboard component -->
+    <cards-list (cardButtonClicked)="onCardButtonClicked($event)"></cards-list>
+  </div>
+</div>

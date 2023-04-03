@@ -1,0 +1,25 @@
+@import "../flex.less";
+@import "../theme.less";
+
+.page-wrapper {
+  height: 100vh;
+
+  .menu-content-wrapper {
+    height: 100%;
+
+    .menu {
+      border: @base-border;
+      width: 150px;
+    }
+
+    .content-wrapper {
+      width: 100%;
+      .content {
+        justify-content: center;
+        overflow-y: auto;
+        width: 100%;
+        overflow-x: hidden;
+      }
+    }
+  }
+}
