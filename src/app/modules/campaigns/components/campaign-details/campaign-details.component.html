@@ -1,1 +1,25 @@
-<div class="campaign-details-wrapper">AAA</div>
+<div
+  class="campaign-details-wrapper flex"
+  *ngIf="campaign$ | async as campaign"
+>
+  <div class="details-left-wrapper flex flex-column">
+    <h1 [innerText]="campaign?.campaignName"></h1>
+    <h6 [innerText]="'by: ' + campaign?.nonProfitRepID">By:</h6>
+    <!-- {role === "Social Activist" && (
+        <Hashtag
+          hashtag={campaign.CampaignHash}
+          options={{ url: campaign.CampaignUrl, text: "PromotIt - " }}
+        />
+      )} -->
+    <p [innerText]="campaign?.campaignDesc"></p>
+  </div>
+  <div class="details-image-wrapper flex flex-column">
+    <img
+      class="campaign-img"
+      [src]="campaign?.image"
+      alt=""
+      width="{330}"
+      height="{220}"
+    />
+  </div>
+</div>

@@ -1,4 +1,6 @@
 <div class="chosen-campaign-wrapper flex flex-column">
-  <campaign-details></campaign-details>
+  <div class="campaign-details-wrapper">
+    <campaign-details [campaign$]="campaignDetails$"></campaign-details>
+  </div>
   <!-- Based on role - ProductsList || Donate products -->
 </div>

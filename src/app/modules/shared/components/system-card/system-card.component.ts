@@ -21,23 +21,25 @@ export class SystemCardComponent {
   @Input() id: number = 0;
   @Input() userRole: string = '';
   @Input() cardType: string = ''; // Will be used to determine if product/campaign
-  @Input() cardDetails: ICampaign = {
-    id: 0,
-    campaignName: '',
-    campaignDesc: '',
-    campaignHash: ' ',
-    campaignUrl: '',
-    donationsAmount: 0,
-    image: ',',
-    nonProfitRepID: '',
-  };
+  @Input() cardDetails: ICampaign | null = null; //{
+  //   id: 0,
+  //   campaignName: '',
+  //   campaignDesc: '',
+  //   campaignHash: ' ',
+  //   campaignUrl: '',
+  //   donationsAmount: 0,
+  //   image: ',',
+  //   nonProfitRepID: '',
+  // };
 
   @Output() cardButtonClicked: EventEmitter<string> =
     new EventEmitter<string>();
   // Or you can use this way
   //
 
-  public onCardButtonClicked(id: number): void {
-    this.cardButtonClicked.emit(this.cardDetails.id.toString());
+  public onCardButtonClicked(id: number | undefined): void {
+    if (this.cardDetails) {
+      this.cardButtonClicked.emit(this.cardDetails.id.toString());
+    }
   }
 }

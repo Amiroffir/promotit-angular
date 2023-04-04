@@ -53,11 +53,11 @@ export class CampaignsDataService {
   public get campaignsListCached$(): Observable<ICampaign[]> {
     if (!this._campaignsList || !this.isCacheValid()) {
       return this.getCampaigns<Object>(`${SERVER_URL}/Campaigns/Get`).pipe(
-        tap((response: Object) => {
+        tap((campaigns: Object) => {
           this._campaignsList = [];
           this._cacheTimeStamp = Date.now();
-          _.forEach(response, (val) => {
-            this._campaignsList?.push(this.toLocalCampaign(val));
+          _.forEach(campaigns, (campaign) => {
+            this._campaignsList?.push(this.toLocalCampaign(campaign));
           });
         }),
         map(() => {
@@ -80,6 +80,18 @@ export class CampaignsDataService {
         return throwError(() => new Error(error.message));
       })
     );
+  }
+
+  public getCampaignById(id: string): Observable<ICampaign> {
+    return this.http
+      .get<IServerCampaign>(`${SERVER_URL}/Campaigns/GetCampaignDetails/${id}`)
+      .pipe(
+        map((campaign: IServerCampaign) => this.toLocalCampaign(campaign)),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(() => new Error(error.message));
+        })
+      );
   }
 
   private toLocalCampaign(serverCampaign: IServerCampaign): ICampaign {

@@ -1,17 +1,17 @@
 <div class="card">
   <h3
-    [innerText]="cardDetails.campaignName"
+    [innerText]="cardDetails?.campaignName"
     class="card-title text-center mt-3"
   ></h3>
   <span class="mt-1 text-center">
-    <a [href]="cardDetails.campaignUrl" class="card-text web-link">
+    <a [href]="cardDetails?.campaignUrl" class="card-text web-link">
       <!-- <LinkIcon /> -->
       Explore Our Website
     </a>
   </span>
   <div class="card-body flex flex-column">
     <img
-      [src]="cardDetails.image"
+      [src]="cardDetails?.image"
       class="card-img img-fluid img-thumbnail img-responsive"
       alt="..."
       width="{20}"
@@ -19,13 +19,13 @@
     />
     <div class="operation-btn" *ngIf="userRole === 'Business Rep'">
       <system-button
-        (click)="onCardButtonClicked(cardDetails.id)"
+        (click)="onCardButtonClicked(cardDetails?.id)"
         text="Donate Products"
       ></system-button>
     </div>
     <div class="operation-btn" *ngIf="userRole === 'Social Activist'">
       <system-button
-        (click)="onCardButtonClicked(cardDetails.id)"
+        (click)="onCardButtonClicked(cardDetails?.id)"
         text="Promote & Shop"
       ></system-button>
     </div>
