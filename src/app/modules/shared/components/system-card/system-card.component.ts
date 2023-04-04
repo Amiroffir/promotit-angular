@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICampaign } from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
 
 interface ICardDetails {

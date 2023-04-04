@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, EMPTY, Observable } from 'rxjs';
-import {
-  CampaignsDataService,
-  ICampaign,
-} from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
+import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { ReportTypes } from '../../enums/reportTypes.enum';
 

@@ -1,6 +1,10 @@
 <div class="my-campaigns-wrapper flex flex-column">
   <h1 class="headline" [innerText]="'My Campaigns'"></h1>
   <div class="table-wrapper">
-    <report-table></report-table>
+    <report-table
+      [data$]="myCampaignsList$"
+      [type]="reportType"
+      (deleteCampaign)="deleteCampaign($event)"
+    ></report-table>
   </div>
 </div>

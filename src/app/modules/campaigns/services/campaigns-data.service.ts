@@ -3,14 +3,9 @@ import { Injectable } from '@angular/core';
 import { catchError, from, map, Observable, tap, throwError } from 'rxjs';
 import { SERVER_URL } from 'src/app/global-env';
 import * as _ from 'underscore';
-
-// interface IBoardTypesReactiveService {
-//   boardTypes$: Observable<IBoardType[]>;
-//   boardTypesCached$: Observable<IBoardType[]>;
-// }
+import { ICampaign } from '../models/campaign.model';
 
 // TODO: add caching clear every 5 minutes or every Create/Update/Delete action
-// TODO: Refactor the interfaces
 
 interface IServerCampaign {
   id: number;
@@ -21,17 +16,6 @@ interface IServerCampaign {
   DonationsAmount: number;
   Image: string;
   NonProfitRepID: string;
-}
-
-export interface ICampaign {
-  id: number;
-  campaignName: string;
-  campaignDesc: string;
-  campaignHash: string;
-  campaignUrl: string;
-  donationsAmount: number;
-  image: string;
-  nonProfitRepID: string;
 }
 
 @Injectable({
@@ -82,11 +66,48 @@ export class CampaignsDataService {
     );
   }
 
+  public getMyCampaigns(email: string | undefined): Observable<ICampaign[]> {
+    if (!email) return from([[]]);
+    return this.http
+      .get<Object>(`${SERVER_URL}/Campaigns/GetMyCampaigns/${email}`)
+      .pipe(
+        map((campaigns: Object) => {
+          const myCampaigns: ICampaign[] = [];
+          _.forEach(campaigns, (campaign) => {
+            myCampaigns.push(this.toLocalCampaign(campaign));
+          });
+          return myCampaigns;
+        }),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(() => new Error(error.message));
+        })
+      );
+  }
+
   public getCampaignById(id: string): Observable<ICampaign> {
     return this.http
       .get<IServerCampaign>(`${SERVER_URL}/Campaigns/GetCampaignDetails/${id}`)
       .pipe(
         map((campaign: IServerCampaign) => this.toLocalCampaign(campaign)),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(() => new Error(error.message));
+        })
+      );
+  }
+
+  public deleteCampaign(id: number): Observable<boolean> {
+    console.log('id: ', id);
+    return this.http
+      .delete<boolean>(`${SERVER_URL}/Campaigns/Delete/${id}`)
+      .pipe(
+        tap((isDeleted: boolean) => {
+          if (isDeleted) {
+            this._campaignsList = null;
+            this._cacheTimeStamp = null;
+          }
+        }),
         catchError((error: Error) => {
           console.error(error);
           return throwError(() => new Error(error.message));

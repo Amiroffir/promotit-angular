@@ -97,6 +97,7 @@ export class Auth0Service {
           complete: () => {
             this.localStorage.set('user', user);
             this.localStorage.set('userRole', this._role);
+            this.localStorage.set('userEmail', user.email);
             this.roleSubject.next(this._role);
           },
         });

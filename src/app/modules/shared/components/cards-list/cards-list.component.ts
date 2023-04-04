@@ -1,37 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { from, Observable } from 'rxjs';
-import { ICampaign } from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
-// const cardItems: any[] = [
-//   {
-//     id: '1',
-//     title: 'System 1',
-//     url: 'https://www.google.com',
-//     imgUrl:
-//       'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
-//   },
-//   {
-//     id: '2',
-//     title: 'System 2',
-//     url: 'https://www.google.com',
-//     imgUrl:
-//       'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
-//   },
-//   {
-//     id: '3',
-//     title: 'System 3',
-//     url: 'https://www.google.com',
-//     imgUrl:
-//       'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
-//   },
-//   {
-//     id: '4',
-//     title: 'System 4',
-//     url: 'https://www.google.com',
-//     imgUrl:
-//       'https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
-//   },
-// ];
 
 @Component({
   selector: 'cards-list',

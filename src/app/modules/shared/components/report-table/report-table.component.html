@@ -1,67 +1,63 @@
-<div class="table-wrapper flex flex-column">
-  <div class="table-head-row flex">
-    <div class="table-head-cell flex flex-fill-remaining"></div>
-    <div class="table-head-cell flex flex-fill-remaining"></div>
-    <div class="table-head-cell flex flex-fill-remaining"></div>
-    <div class="table-head-cell flex flex-fill-remaining"></div>
-  </div>
-  <div class="table-row flex">
-    <div class="table-cell flex flex-fill-remaining"></div>
-    <div class="table-cell flex flex-fill-remaining"></div>
-    <div class="table-cell flex flex-fill-remaining"></div>
-    <div class="table-cell flex flex-fill-remaining"></div>
-  </div>
-  <div class="table-row flex">
-    <div class="table-cell flex-fill-remaining"></div>
-    <div class="table-cell flex-fill-remaining"></div>
-    <div class="table-cell flex-fill-remaining"></div>
-    <div class="table-cell flex-fill-remaining"></div>
-  </div>
+<div class="table-wrapper flex flex-column" *ngIf="data$ | async as data">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th
+          scope="col"
+          *ngFor="let item of reportTemplate"
+          [innerText]="item.header"
+        ></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dataItem of data">
+        <ng-container *ngFor="let item of reportTemplate">
+          <td
+            *ngIf="item.content !== 'campaignUrl'"
+            [innerText]="dataItem[item.content]"
+          ></td>
+          <td *ngIf="item.content === 'campaignUrl'">
+            <a
+              [href]="dataItem[item.content]"
+              target="_blank"
+              rel="noopener noreferrer"
+              [innerText]="dataItem[item.content]"
+            ></a>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="type === 'My Campaigns'">
+          <td>
+            <div class="flex">
+              <div class="flex flex-fill-remaining">
+                <button class="btn btn-warning" [innerText]="'Edit'"></button>
+              </div>
+              <div class="flex flex-fill-remaining">
+                <button
+                  class="btn btn-sm btn-danger"
+                  [innerText]="'Delete'"
+                  (click)="onDeleteCampaign(dataItem.id)"
+                ></button>
+              </div>
+            </div></td
+        ></ng-container>
+      </tr>
+    </tbody>
+  </table>
 
-  <!-- <thead>
-          <tr>
-            <th scope="col">
-              Campaign Name
-              <ArrowDropDownOutlinedIcon
-                className="dropdown-arr"
-                onClick={() => sortReport("campaignName")}
-              />
-            </th>
-            <th scope="col">Campaign Hash</th>
-            <th scope="col">
-              By
-              <ArrowDropDownOutlinedIcon
-                className="dropdown-arr"
-                onClick={() => sortReport("campaignBy")}
-              />
-            </th>
-            <th scope="col">Website</th>
-            <th scope="col">
-              Donations
-              <ArrowDropDownOutlinedIcon
-                className="dropdown-arr"
-                onClick={() => sortReport("donations")}
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {campaigns &&
-            campaigns.map((campaign) => {
-              return (
-                <tr>
-                  <td>{campaign[1].CampaignName}</td>
-                  <td>{campaign[1].CampaignHash}</td>
-                  <td>{campaign[1].NonProfitRepID}</td>
-                  <td>
-                    <a href={campaign[1].CampaignUrl}>
-                      <LinkIcon />
-                    </a>
-                  </td>
-                  <td>{campaign[1].DonationsAmount}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table> -->
+  <!-- <div class="table-wrapper flex flex-column" *ngIf="data$ | async as data">
+  <div class="table-head-row flex">
+    <div
+      class="table-head-cell flex flex-fill-remaining"
+      *ngFor="let item of reportTemplate"
+      [innerText]="item.header"
+    ></div>
+  </div>
+  <div class="table-row flex" *ngFor="let dataItem of data">
+    <div
+      class="table-cell flex flex-fill-remaining"
+      *ngFor="let item of reportTemplate"
+    >
+      {{ dataItem[item.content] }}
+    </div>
+  </div> -->
 </div>

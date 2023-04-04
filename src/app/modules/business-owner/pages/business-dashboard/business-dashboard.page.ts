@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, EMPTY } from 'rxjs';
-import {
-  CampaignsDataService,
-  ICampaign,
-} from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
+import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 
 @Component({
   selector: 'business-dashboard',

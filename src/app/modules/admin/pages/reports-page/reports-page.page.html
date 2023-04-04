@@ -1,6 +1,6 @@
 <div class="reports-page-wrapper flex flex-column">
   <h1 class="reports-headline" [innerText]="reportType"></h1>
   <div class="table-wrap">
-    <report-table></report-table>
+    <report-table [data$]="reportData$" [type]="reportType"></report-table>
   </div>
 </div>

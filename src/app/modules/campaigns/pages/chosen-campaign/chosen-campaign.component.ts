@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { catchError, EMPTY, Observable } from 'rxjs';
-import {
-  CampaignsDataService,
-  ICampaign,
-} from '../../services/campaigns-data.service';
+import { CampaignsDataService } from '../../services/campaigns-data.service';
+import { ICampaign } from '../../models/campaign.model';
 
 @Component({
   selector: 'chosen-campaign',

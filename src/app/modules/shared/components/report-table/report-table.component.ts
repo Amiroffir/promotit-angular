@@ -1,4 +1,31 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable, take } from 'rxjs';
+import { ICampaign } from '../../../campaigns/models/campaign.model';
+
+// NEED TO IMLEMENT SORTING AND FILTERING //
+
+interface IReportItem {
+  header: string;
+  content: string;
+}
+const campaignReportTemplate: IReportItem[] = [
+  {
+    header: 'Campaign Name',
+    content: 'campaignName',
+  },
+  {
+    header: 'Campaign Hash',
+    content: 'campaignHash',
+  },
+  {
+    header: 'By',
+    content: 'nonProfitRepID',
+  },
+  {
+    header: 'Website',
+    content: 'campaignUrl',
+  },
+];
 
 @Component({
   selector: 'report-table',
@@ -6,9 +33,25 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./report-table.component.less'],
 })
 export class ReportTableComponent {
+  public reportTemplate: IReportItem[] = [];
   constructor() {}
 
-  @Input() public data: any;
+  @Input() data$: Observable<ICampaign[]> | null = null;
+  @Input() type: string = '';
 
-  ngOnInit(): void {}
+  @Output() deleteCampaign: EventEmitter<number> = new EventEmitter<number>();
+
+  public onDeleteCampaign(id: number): void {
+    this.deleteCampaign.emit(id);
+  }
+
+  public ngOnInit(): void {
+    console.log(this.type);
+    if (this.type === 'Campaigns') {
+      this.reportTemplate = campaignReportTemplate;
+    }
+    if (this.type === 'My Campaigns') {
+      this.reportTemplate = campaignReportTemplate;
+    }
+  }
 }

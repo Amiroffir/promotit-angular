@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICampaign } from '../../services/campaigns-data.service';
-
+import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 @Component({
   selector: 'campaign-details',
   templateUrl: './campaign-details.component.html',

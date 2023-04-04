@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable, catchError, EMPTY } from 'rxjs';
-import {
-  CampaignsDataService,
-  ICampaign,
-} from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 
 @Component({
   selector: 'non-profit-dashboard',
