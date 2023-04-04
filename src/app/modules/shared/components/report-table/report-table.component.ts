@@ -40,9 +40,14 @@ export class ReportTableComponent {
   @Input() type: string = '';
 
   @Output() deleteCampaign: EventEmitter<number> = new EventEmitter<number>();
+  @Output() editCampaign: EventEmitter<ICampaign> =
+    new EventEmitter<ICampaign>();
 
   public onDeleteCampaign(id: number): void {
     this.deleteCampaign.emit(id);
+  }
+  public onEditCampaign(campaign: ICampaign): void {
+    this.editCampaign.emit(campaign);
   }
 
   public ngOnInit(): void {

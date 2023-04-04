@@ -29,7 +29,11 @@
           <td>
             <div class="flex">
               <div class="flex flex-fill-remaining">
-                <button class="btn btn-warning" [innerText]="'Edit'"></button>
+                <button
+                  class="btn btn-warning"
+                  [innerText]="'Edit'"
+                  (click)="onEditCampaign(dataItem)"
+                ></button>
               </div>
               <div class="flex flex-fill-remaining">
                 <button

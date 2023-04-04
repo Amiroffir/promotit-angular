@@ -1,11 +1,9 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { User } from '@auth0/auth0-angular';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, catchError, EMPTY, take, tap } from 'rxjs';
-import { ReportTypes } from 'src/app/modules/admin/enums/reportTypes.enum';
+import { EditCampaignDialog } from 'src/app/modules/campaigns/components/edit-campaign-dialog/edit-campaign-dialog.component';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
-import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
 
 @Component({
@@ -20,7 +18,8 @@ export class MyCampaignsPage implements OnInit {
 
   constructor(
     private campaignsData: CampaignsDataService,
-    private localStroage: LocalStorageService
+    private localStroage: LocalStorageService,
+    private dialog: MatDialog
   ) {
     this._userEmail = this.localStroage
       .get<string>('userEmail')
@@ -35,6 +34,16 @@ export class MyCampaignsPage implements OnInit {
           return EMPTY;
         })
       );
+  }
+
+  public openEditDialog(campaign: ICampaign): void {
+    const dialogRef = this.dialog.open(EditCampaignDialog, {
+      width: '800px',
+      data: campaign,
+    });
+    dialogRef.afterClosed().subscribe((result: ICampaign) => {
+      console.log(result); // Send the result to the server to update the campaign
+    });
   }
 
   public deleteCampaign(id: number): void {

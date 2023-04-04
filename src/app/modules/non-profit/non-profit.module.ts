@@ -8,6 +8,7 @@ import { CampaignsModule } from '../campaigns/campaigns.module';
 import { AddCampaignComponent } from '../campaigns/components/add-campaign/add-campaign.component';
 import { NonProfitAuthGuard } from './guards/non-profit-auth.guard';
 import { NonProfitRoutes } from './enums/nonProfitRoutes.enum';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     CampaignsModule,
+    MatDialogModule,
   ],
   exports: [RouterModule, NonProfitDashboard],
   providers: [],

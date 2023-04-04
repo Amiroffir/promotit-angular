@@ -13,6 +13,7 @@ import { SocialActivistModule } from './modules/social-activist/social-activist.
 import { NonProfitModule } from './modules/non-profit/non-profit.module';
 import { LoadingComponent } from './components/loading/loading.component';
 import { SystemButtonComponent } from './modules/shared/components/system-button/system-button.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, SidebarComponent, LoadingComponent],
@@ -24,6 +25,7 @@ import { SystemButtonComponent } from './modules/shared/components/system-button
     BusinessOwnerModule,
     SocialActivistModule,
     NonProfitModule,
+    BrowserAnimationsModule,
   ],
   bootstrap: [AppComponent],
 })
