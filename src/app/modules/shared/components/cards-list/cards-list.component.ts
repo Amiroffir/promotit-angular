@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
-import { LocalStorageService } from 'src/app/services/local-stroage.service';
+import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 
 @Component({
   selector: 'cards-list',
@@ -9,9 +9,8 @@ import { LocalStorageService } from 'src/app/services/local-stroage.service';
   styleUrls: ['./cards-list.component.less'],
 })
 export class CardsListComponent implements OnInit {
-  constructor(private localStorage: LocalStorageService) {
-    let roleWithApostrophes: string = this.localStorage.get('userRole');
-    this.userRole = roleWithApostrophes.replace(/['"]+/g, '');
+  constructor(private auth: Auth0Service) {
+    this.userRole = this.auth.role;
   }
   public userRole: string = '';
   @Input() cardItems$: Observable<ICampaign[]> = from([]);

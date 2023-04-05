@@ -5,8 +5,6 @@ import { SERVER_URL } from 'src/app/global-env';
 import * as _ from 'underscore';
 import { ICampaign } from '../models/campaign.model';
 
-// TODO: add caching clear every 5 minutes or every Create/Update/Delete action
-
 interface IServerCampaign {
   id: number;
   CampaignName: string;

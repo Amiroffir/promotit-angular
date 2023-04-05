@@ -44,24 +44,15 @@
               </div>
             </div></td
         ></ng-container>
+        <ng-container *ngIf="type === 'Users'">
+          <td>
+            <button
+              class="btn btn-outline-info"
+              [innerText]="'Show User Details - Not Implemented'"
+            ></button>
+          </td>
+        </ng-container>
       </tr>
     </tbody>
   </table>
-
-  <!-- <div class="table-wrapper flex flex-column" *ngIf="data$ | async as data">
-  <div class="table-head-row flex">
-    <div
-      class="table-head-cell flex flex-fill-remaining"
-      *ngFor="let item of reportTemplate"
-      [innerText]="item.header"
-    ></div>
-  </div>
-  <div class="table-row flex" *ngFor="let dataItem of data">
-    <div
-      class="table-cell flex flex-fill-remaining"
-      *ngFor="let item of reportTemplate"
-    >
-      {{ dataItem[item.content] }}
-    </div>
-  </div> -->
 </div>
