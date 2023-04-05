@@ -42,8 +42,35 @@ export class MyCampaignsPage implements OnInit {
       data: campaign,
     });
     dialogRef.afterClosed().subscribe((result: ICampaign) => {
-      console.log(result); // Send the result to the server to update the campaign
+      if (result) {
+        this.updateCampaign(result);
+      }
     });
+  }
+
+  public updateCampaign(campaign: ICampaign): void {
+    this.campaignsData
+      .updateCampaign(campaign)
+      .pipe(
+        tap((updated: boolean) => {
+          if (updated) {
+            this.myCampaignsList$ = this.campaignsData
+              .getMyCampaigns(this._userEmail)
+              .pipe(
+                catchError((error: any) => {
+                  console.error(error);
+                  return EMPTY;
+                })
+              );
+          }
+        }),
+        take(1),
+        catchError((error: any) => {
+          console.error(error);
+          return EMPTY;
+        })
+      )
+      .subscribe();
   }
 
   public deleteCampaign(id: number): void {

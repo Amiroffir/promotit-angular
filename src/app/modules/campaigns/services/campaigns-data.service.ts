@@ -97,6 +97,24 @@ export class CampaignsDataService {
       );
   }
 
+  public updateCampaign(campaign: ICampaign): Observable<boolean> {
+    const serverCampaign: IServerCampaign = this.toServerCampaign(campaign);
+    return this.http
+      .put<boolean>(`${SERVER_URL}/Campaigns/Update`, serverCampaign)
+      .pipe(
+        tap((campaign: boolean) => {
+          if (campaign) {
+            this._campaignsList = null;
+            this._cacheTimeStamp = null;
+          }
+        }),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(() => new Error(error.message));
+        })
+      );
+  }
+
   public deleteCampaign(id: number): Observable<boolean> {
     console.log('id: ', id);
     return this.http
@@ -113,6 +131,19 @@ export class CampaignsDataService {
           return throwError(() => new Error(error.message));
         })
       );
+  }
+
+  private toServerCampaign(localCampaign: ICampaign): IServerCampaign {
+    return {
+      id: localCampaign.id,
+      CampaignName: localCampaign.campaignName,
+      CampaignDesc: localCampaign.campaignDesc,
+      CampaignHash: localCampaign.campaignHash,
+      CampaignUrl: localCampaign.campaignUrl,
+      DonationsAmount: localCampaign.donationsAmount,
+      Image: localCampaign.image,
+      NonProfitRepID: localCampaign.nonProfitRepID,
+    };
   }
 
   private toLocalCampaign(serverCampaign: IServerCampaign): ICampaign {
