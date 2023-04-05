@@ -97,6 +97,24 @@ export class CampaignsDataService {
       );
   }
 
+  public createCampaign(campaign: ICampaign): Observable<boolean> {
+    const serverCampaign: IServerCampaign = this.toServerCampaign(campaign);
+    return this.http
+      .post<boolean>(`${SERVER_URL}/Campaigns/Add`, serverCampaign)
+      .pipe(
+        tap((created: boolean) => {
+          if (created) {
+            this._campaignsList = null;
+            this._cacheTimeStamp = null;
+          }
+        }),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(() => new Error(error.message));
+        })
+      );
+  }
+
   public updateCampaign(campaign: ICampaign): Observable<boolean> {
     const serverCampaign: IServerCampaign = this.toServerCampaign(campaign);
     return this.http

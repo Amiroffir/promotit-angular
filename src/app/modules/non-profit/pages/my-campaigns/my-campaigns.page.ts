@@ -4,6 +4,7 @@ import { Observable, catchError, EMPTY, take, tap } from 'rxjs';
 import { EditCampaignDialog } from 'src/app/modules/campaigns/components/edit-campaign-dialog/edit-campaign-dialog.component';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
 
 @Component({
@@ -18,12 +19,10 @@ export class MyCampaignsPage implements OnInit {
 
   constructor(
     private campaignsData: CampaignsDataService,
-    private localStroage: LocalStorageService,
+    private auth: Auth0Service,
     private dialog: MatDialog
   ) {
-    this._userEmail = this.localStroage
-      .get<string>('userEmail')
-      .replace(/"/g, '');
+    this._userEmail = this.auth.userEmail;
   }
   public ngOnInit(): void {
     this.myCampaignsList$ = this.campaignsData

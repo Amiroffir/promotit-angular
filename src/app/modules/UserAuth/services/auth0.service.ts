@@ -40,16 +40,22 @@ export class Auth0Service {
     if (user.length > 0) {
       this._isAuthenticated = true;
       this._role = localStorage.get<string>('userRole');
+      this._userEmail = localStorage.get<string>('userEmail');
     }
   }
 
   private _isAuthenticated: boolean = false;
   private _role: string = '';
+  private _userEmail: string = '';
   public get isAuthenticated(): boolean {
     return this._isAuthenticated;
   }
   public get role(): string {
-    return this._role;
+    return this._role.replace(/"/g, '');
+  }
+
+  public get userEmail(): string {
+    return this._userEmail.replace(/"/g, '');
   }
 
   private roleSubject = new BehaviorSubject<string>('');
