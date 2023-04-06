@@ -33,7 +33,7 @@ export class ReportsDataService {
         }),
         catchError((error: Error) => {
           console.error(error);
-          return throwError(() => new Error(error.message));
+          return throwError(() => new Error('Error getting tweets report'));
         })
       );
   }
@@ -47,7 +47,7 @@ export class ReportsDataService {
       }),
       catchError((error: Error) => {
         console.error(error);
-        return throwError(() => new Error(error.message));
+        return throwError(() => new Error('Error getting users report'));
       })
     );
   }

@@ -59,7 +59,7 @@ export class CampaignsDataService {
     return this.http.get<T>(url).pipe(
       catchError((error: Error) => {
         console.error(error);
-        return throwError(() => new Error(error.message));
+        return throwError(() => new Error('Error getting campaigns'));
       })
     );
   }
@@ -78,7 +78,7 @@ export class CampaignsDataService {
         }),
         catchError((error: Error) => {
           console.error(error);
-          return throwError(() => new Error(error.message));
+          return throwError(() => new Error('Error getting campaigns'));
         })
       );
   }
@@ -90,7 +90,7 @@ export class CampaignsDataService {
         map((campaign: IServerCampaign) => this.toLocalCampaign(campaign)),
         catchError((error: Error) => {
           console.error(error);
-          return throwError(() => new Error(error.message));
+          return throwError(() => new Error('Error getting campaign details'));
         })
       );
   }
@@ -108,7 +108,7 @@ export class CampaignsDataService {
         }),
         catchError((error: Error) => {
           console.error(error);
-          return throwError(() => new Error(error.message));
+          return throwError(() => new Error('Error creating new campaign'));
         })
       );
   }
@@ -126,7 +126,7 @@ export class CampaignsDataService {
         }),
         catchError((error: Error) => {
           console.error(error);
-          return throwError(() => new Error(error.message));
+          return throwError(() => new Error('Error updating campaign'));
         })
       );
   }
@@ -144,7 +144,7 @@ export class CampaignsDataService {
         }),
         catchError((error: Error) => {
           console.error(error);
-          return throwError(() => new Error(error.message));
+          return throwError(() => new Error('Error deleting campaign'));
         })
       );
   }

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, catchError, EMPTY, take, tap } from 'rxjs';
 import { EditCampaignDialog } from 'src/app/modules/campaigns/components/edit-campaign-dialog/edit-campaign-dialog.component';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
-import { LocalStorageService } from 'src/app/services/local-stroage.service';
 
 @Component({
   selector: 'my-campaigns',
@@ -20,7 +20,8 @@ export class MyCampaignsPage implements OnInit {
   constructor(
     private campaignsData: CampaignsDataService,
     private auth: Auth0Service,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {
     this._userEmail = this.auth.userEmail;
   }
@@ -30,6 +31,7 @@ export class MyCampaignsPage implements OnInit {
       .pipe(
         catchError((error: any) => {
           console.error(error);
+          this.openSnackBar(error);
           return EMPTY;
         })
       );
@@ -47,6 +49,12 @@ export class MyCampaignsPage implements OnInit {
     });
   }
 
+  private openSnackBar(message: string, action?: string) {
+    this._snackBar.open(message, action, {
+      duration: 4000,
+    });
+  }
+
   public updateCampaign(campaign: ICampaign): void {
     this.campaignsData
       .updateCampaign(campaign)
@@ -58,14 +66,17 @@ export class MyCampaignsPage implements OnInit {
               .pipe(
                 catchError((error: any) => {
                   console.error(error);
+                  this.openSnackBar(error);
                   return EMPTY;
                 })
               );
+            this.openSnackBar('Campaign updated successfully');
           }
         }),
         take(1),
         catchError((error: any) => {
           console.error(error);
+          this.openSnackBar(error);
           return EMPTY;
         })
       )
@@ -76,21 +87,24 @@ export class MyCampaignsPage implements OnInit {
     this.campaignsData
       .deleteCampaign(id)
       .pipe(
-        tap((result: boolean) => {
-          if (result) {
+        tap((deleted: boolean) => {
+          if (deleted) {
             this.myCampaignsList$ = this.campaignsData
               .getMyCampaigns(this._userEmail)
               .pipe(
                 catchError((error: any) => {
                   console.error(error);
+                  this.openSnackBar(error);
                   return EMPTY;
                 })
               );
+            this.openSnackBar('Campaign deleted successfully');
           }
         }),
         take(1),
         catchError((error: any) => {
           console.error(error);
+          this.openSnackBar(error);
           return EMPTY;
         })
       )

@@ -4,6 +4,7 @@ import { SystemButtonComponent } from './components/system-button/system-button.
 import { SystemCardComponent } from './components/system-card/system-card.component';
 import { CardsListComponent } from './components/cards-list/cards-list.component';
 import { ReportTableComponent } from './components/report-table/report-table.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,7 @@ import { ReportTableComponent } from './components/report-table/report-table.com
     CardsListComponent,
     ReportTableComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, MatSnackBarModule],
   exports: [
     SystemButtonComponent,
     SystemCardComponent,
