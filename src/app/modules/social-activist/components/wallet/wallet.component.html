@@ -1,0 +1,6 @@
+<div class="wallet-wrapper flex flex-column">
+  <span [innerText]="walletAmount$ | async | currency : 'USD'"></span>
+  <div>
+    <button class="btn btn-sm btn-primary">Refresh</button>
+  </div>
+</div>

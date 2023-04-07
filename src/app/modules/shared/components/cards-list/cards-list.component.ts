@@ -8,12 +8,12 @@ import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
   templateUrl: './cards-list.component.html',
   styleUrls: ['./cards-list.component.less'],
 })
-export class CardsListComponent implements OnInit {
+export class CardsListComponent {
   constructor(private auth: Auth0Service) {
     this.userRole = this.auth.role;
   }
   public userRole: string = '';
-  @Input() cardItems$: Observable<ICampaign[]> = from([]);
+  @Input() cardItems$: Observable<ICampaign[] | any> | null = from([]);
   @Input() cardType: string = '';
 
   @Output() cardButtonClicked: EventEmitter<string> =
@@ -23,6 +23,4 @@ export class CardsListComponent implements OnInit {
     console.log('id: ', id);
     this.cardButtonClicked.emit(id);
   }
-
-  ngOnInit(): void {}
 }

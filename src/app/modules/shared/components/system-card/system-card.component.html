@@ -1,33 +1,65 @@
 <div class="card">
-  <h3
-    [innerText]="cardDetails?.campaignName"
-    class="card-title text-center mt-3"
-  ></h3>
-  <span class="mt-1 text-center">
-    <a [href]="cardDetails?.campaignUrl" class="card-text web-link">
-      <!-- <LinkIcon /> -->
-      Explore Our Website
-    </a>
-  </span>
-  <div class="card-body flex flex-column">
-    <img
-      [src]="cardDetails?.image"
-      class="card-img img-fluid img-thumbnail img-responsive"
-      alt="..."
-      width="{20}"
-      height="{150}"
-    />
-    <div class="operation-btn" *ngIf="userRole === 'Business Rep'">
-      <system-button
-        (click)="onCardButtonClicked(cardDetails?.id)"
-        text="Donate Products"
-      ></system-button>
+  <ng-container *ngIf="cardType === 'campaign'">
+    <ng-container *ngTemplateOutlet="campaign"></ng-container>
+  </ng-container>
+  <ng-container *ngIf="cardType === 'product'">
+    <ng-container *ngTemplateOutlet="products"></ng-container>
+  </ng-container>
+
+  <ng-template #campaign>
+    <h3
+      [innerText]="cardDetails?.campaignName"
+      class="card-title text-center mt-2"
+    ></h3>
+    <span class="mt-1 text-center">
+      <a [href]="cardDetails?.campaignUrl" class="card-text web-link">
+        <!-- <LinkIcon /> -->
+        Explore Our Website
+      </a>
+    </span>
+    <div class="card-body">
+      <img
+        [src]="cardDetails?.image"
+        class="card-img img-fluid img-thumbnail img-responsive"
+        alt="..."
+        width="{20}"
+        height="{150}"
+      />
+      <div class="operation-btn" *ngIf="userRole === 'Business Rep'">
+        <system-button
+          (click)="onCardButtonClicked(cardDetails?.id)"
+          text="Donate Products"
+        ></system-button>
+      </div>
+      <div class="operation-btn" *ngIf="userRole === 'Social Activist'">
+        <system-button
+          (click)="onCardButtonClicked(cardDetails?.id)"
+          text="Promote & Shop"
+        ></system-button>
+      </div>
     </div>
-    <div class="operation-btn" *ngIf="userRole === 'Social Activist'">
+  </ng-template>
+</div>
+
+<ng-template #products>
+  <img
+    [src]="cardDetails?.image"
+    class="card-img-top"
+    alt="..."
+    width="{20}"
+    height="{175}"
+  />
+  <div class="card-body">
+    <h2 class="card-title mb-2" [innerText]="cardDetails?.productName"></h2>
+    <h4
+      class="card-subtitle mb-2 text-muted"
+      [innerText]="cardDetails?.price | currency : 'USD' : 'symbol' : '1.2-2'"
+    ></h4>
+    <div>
       <system-button
         (click)="onCardButtonClicked(cardDetails?.id)"
-        text="Promote & Shop"
+        text="Buy Now"
       ></system-button>
     </div>
   </div>
-</div>
+</ng-template>

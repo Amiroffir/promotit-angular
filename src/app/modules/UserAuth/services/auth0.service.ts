@@ -1,24 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   BehaviorSubject,
   catchError,
-  EMPTY,
-  filter,
-  map,
   Observable,
-  switchMap,
   take,
   throwError,
 } from 'rxjs';
 import { SERVER_URL } from 'src/app/global-env';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
-import { tap } from 'underscore';
-
-///////////////////////////////
-// Have to try to change this service to isReady/OnReady pattern.
-// Example: in Iliya git repo "authentificationService.ts"
 
 export interface Role {
   id: string;
@@ -39,8 +30,8 @@ export class Auth0Service {
     let user: string[] = localStorage.get<string[]>('user');
     if (user.length > 0) {
       this._isAuthenticated = true;
-      this._role = localStorage.get<string>('userRole');
       this._userEmail = localStorage.get<string>('userEmail');
+      this._role = localStorage.get<string>('userRole');
     }
   }
 
@@ -55,7 +46,7 @@ export class Auth0Service {
   }
 
   public get userEmail(): string {
-    return this._userEmail.replace(/"/g, '');
+    return this.localStorage.get<string>('userEmail').replace(/"/g, '');
   }
 
   private roleSubject = new BehaviorSubject<string>('');
@@ -81,6 +72,7 @@ export class Auth0Service {
   public logout(): void {
     this.localStorage.set('user', null); // Remove user from local storage
     this.localStorage.set('userRole', null); // Remove user role from local storage
+    this.localStorage.set('userEmail', null); // Remove user email from local storage
     this.auth.logout({ returnTo: window.location.origin });
   }
 
@@ -96,7 +88,7 @@ export class Auth0Service {
               this._role = roles[0].name;
             }
           },
-          error: (err) => {
+          error: (err: Error) => {
             console.error(err);
             this._role = 'unknown';
           },

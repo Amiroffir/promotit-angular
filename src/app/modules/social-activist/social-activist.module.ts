@@ -7,6 +7,7 @@ import { CampaignsModule } from '../campaigns/campaigns.module';
 import { ChosenCampaignPage } from '../campaigns/pages/chosen-campaign/chosen-campaign.component';
 import { SocialRoutes } from './enums/socialRoutes.enum';
 import { SocialActAuthGuard } from './guards/social-act-auth.guard';
+import { WalletComponent } from './components/wallet/wallet.component';
 
 const routes: Routes = [
   { path: SocialRoutes.socialActivistDashboard, component: SocialActDashboard },
@@ -17,14 +18,14 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [SocialActDashboard],
+  declarations: [SocialActDashboard, WalletComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
     CampaignsModule,
   ],
-  exports: [RouterModule, SocialActDashboard],
+  exports: [RouterModule, SocialActDashboard, WalletComponent],
   providers: [],
 })
 export class SocialActivistModule {}

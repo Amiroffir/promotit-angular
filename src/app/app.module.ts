@@ -14,6 +14,7 @@ import { NonProfitModule } from './modules/non-profit/non-profit.module';
 import { LoadingComponent } from './components/loading/loading.component';
 import { SystemButtonComponent } from './modules/shared/components/system-button/system-button.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WalletComponent } from './modules/social-activist/components/wallet/wallet.component';
 
 @NgModule({
   declarations: [AppComponent, SidebarComponent, LoadingComponent],

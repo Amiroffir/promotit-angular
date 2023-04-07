@@ -2,5 +2,16 @@
   <div class="campaign-details-wrapper">
     <campaign-details [campaign$]="campaignDetails$"></campaign-details>
   </div>
-  <!-- Based on role - ProductsList || Donate products -->
+  <div class="campaign-operations-wrapper">
+    <ng-container *ngIf="userRole === 'Social Activist'">
+      <cards-list
+        (cardButtonClicked)="handleBuy($event)"
+        [cardItems$]="productsList$"
+        [cardType]="'product'"
+      ></cards-list>
+    </ng-container>
+    <ng-container *ngIf="userRole === 'Business Rep'">
+      <products-donation></products-donation>
+    </ng-container>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="menu-container flex flex-column">
+<div class="menu-wrapper flex flex-column">
   <ul class="menu-options-list">
     <li>
       <a class="menu-link">
@@ -33,20 +33,12 @@
       </a>
     </li>
 
-    <!-- <li *ngIf="role === 'Social Activist'">
+    <li *ngIf="(role$ | async) === 'Social Activist'">
       <a class="menu-link">
-        <div>
-          <Wallet /> 
-        </div>
-        <div class="title">Wallet</div>
+        <wallet></wallet>
       </a>
-    </li> -->
-
-    <li>
-      <div [innerText]="" class="menu-link">
-        <!-- <FaceIcon /> -->
-      </div>
     </li>
+
     <li>
       <a class="menu-link">
         <div>

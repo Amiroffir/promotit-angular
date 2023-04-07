@@ -1,0 +1,79 @@
+<div class="donations-wrapper flex">
+  <div class="donations-form-wrapper">
+    <div class="input">
+      <input
+        class="form-control"
+        type="text"
+        name="productID"
+        placeholder="Product ID"
+        required
+        [(ngModel)]="product.productId"
+      />
+    </div>
+    <div class="input">
+      <input
+        class="form-control"
+        type="text"
+        name="productName"
+        placeholder="Product Name"
+        required
+        [(ngModel)]="product.productName"
+      />
+    </div>
+    <div class="input">
+      <input
+        class="form-control"
+        type="decimal"
+        name="price"
+        placeholder="Value($)"
+        required
+        [(ngModel)]="product.price"
+      />
+    </div>
+    <div class="input">
+      <input
+        class="form-control"
+        type="text"
+        name="Image"
+        placeholder="Image URL"
+        required
+        [(ngModel)]="product.image"
+      />
+    </div>
+    <div>
+      <button class="btn btn-primary" (click)="addToProductsList()">
+        Add To List
+      </button>
+    </div>
+  </div>
+  <div class="donations-list-wrapper">
+    <div class="prd-toAdd-tbl">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Product ID</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Value($)</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr key="product.sysId" *ngFor="let product of productsToDonate">
+            <td [innerText]="product.productId"></td>
+            <td [innerText]="product.productName"></td>
+            <td [innerText]="product.price"></td>
+            <td>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="removeFromProductsList(product.sysId)"
+              >
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-primary" (click)="donateProducts()">Donate</button>
+  </div>
+</div>
