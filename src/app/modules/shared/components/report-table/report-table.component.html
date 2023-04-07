@@ -52,6 +52,15 @@
             ></button>
           </td>
         </ng-container>
+        <ng-container *ngIf="type === 'Deliveries'">
+          <td>
+            <button
+              class="btn btn-outline-info"
+              [innerText]="'Delivered'"
+              (click)="onDelivered(dataItem.serialNumber)"
+            ></button>
+          </td>
+        </ng-container>
       </tr>
     </tbody>
   </table>

@@ -58,6 +58,29 @@ const tweetReportTemplate: IReportItem[] = [
   },
 ];
 
+const deliveryReportTemplate: IReportItem[] = [
+  {
+    header: 'Product ID',
+    content: 'pid',
+  },
+  {
+    header: 'Full Name',
+    content: 'fullName',
+  },
+  {
+    header: 'Email',
+    content: 'email',
+  },
+  {
+    header: 'Address',
+    content: 'address',
+  },
+  {
+    header: 'Phone',
+    content: 'phone',
+  },
+];
+
 @Component({
   selector: 'report-table',
   templateUrl: './report-table.component.html',
@@ -73,12 +96,16 @@ export class ReportTableComponent {
   @Output() deleteCampaign: EventEmitter<number> = new EventEmitter<number>();
   @Output() editCampaign: EventEmitter<ICampaign> =
     new EventEmitter<ICampaign>();
+  @Output() deliveredClicked: EventEmitter<number> = new EventEmitter<number>();
 
   public onDeleteCampaign(id: number): void {
     this.deleteCampaign.emit(id);
   }
   public onEditCampaign(campaign: ICampaign): void {
     this.editCampaign.emit(campaign);
+  }
+  public onDelivered(serialNumber: number) {
+    this.deliveredClicked.emit(serialNumber);
   }
 
   public ngOnInit(): void {
@@ -90,6 +117,9 @@ export class ReportTableComponent {
     }
     if (this.type === 'Tweets') {
       this.reportTemplate = tweetReportTemplate;
+    }
+    if (this.type === 'Deliveries') {
+      this.reportTemplate = deliveryReportTemplate;
     }
   }
 }

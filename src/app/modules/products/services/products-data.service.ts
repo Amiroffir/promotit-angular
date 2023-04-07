@@ -12,7 +12,16 @@ import {
 } from 'rxjs';
 import { SERVER_URL } from 'src/app/global-env';
 import { Auth0Service } from '../../UserAuth/services/auth0.service';
-import { IProduct } from '../models/product.model';
+import { IDelivery, IProduct } from '../models/product.model';
+
+interface IServerDelivery {
+  ProductSerialNumber: number;
+  PID: number;
+  FullName: string;
+  Email: string;
+  Address: string;
+  Phone: string;
+}
 
 interface IServerProduct {
   id: number;
@@ -38,9 +47,11 @@ interface IProductToBuyRequest {
 })
 export class ProductsDataService {
   constructor(private http: HttpClient, private auth: Auth0Service) {
-    this.getWalletAmount().subscribe((amount: number) => {
-      this.walletSubject.next(amount);
-    });
+    if (this.auth.role === 'Social Activist') {
+      this.getWalletAmount().subscribe((amount: number) => {
+        this.walletSubject.next(amount);
+      });
+    }
   }
   private _productsList: IProduct[] = []; // local list of products for data extract before sending to server.
 
@@ -189,6 +200,59 @@ export class ProductsDataService {
           return throwError(() => new Error('Error getting wallet amount'));
         })
       );
+  }
+
+  public getPendingDeliveries(): Observable<any> {
+    const email = this.auth.userEmail;
+    if (!email || email.length < 1) {
+      console.error('email is not valid');
+    }
+    return this.http
+      .get<IServerDelivery[]>(
+        `${SERVER_URL}/BusinessReps/GetDeliveries/${email}`
+      )
+      .pipe(
+        map((deliveries: IServerDelivery[]) => {
+          return deliveries.map((delivery: IServerDelivery) => {
+            return this.toLocalDelivery(delivery);
+          });
+        }),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(
+            () => new Error('Error getting pending deliveries')
+          );
+        })
+      );
+  }
+
+  updateDelivered(serialNumber: number) {
+    return this.http
+      .put<boolean>(
+        `${SERVER_URL}/BusinessReps/UpdateDelivered/${serialNumber}`,
+        ''
+      )
+      .pipe(
+        tap((updated: boolean) => {
+          console.log(updated);
+        }),
+        take(1),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(() => new Error('Error updating delivery'));
+        })
+      );
+  }
+
+  private toLocalDelivery(delivery: IServerDelivery): IDelivery {
+    return {
+      serialNumber: delivery.ProductSerialNumber,
+      pid: delivery.PID,
+      fullName: delivery.FullName,
+      email: delivery.Email,
+      address: delivery.Address,
+      phone: delivery.Phone,
+    };
   }
 
   private toLocalProduct(product: IServerProduct): IProduct {

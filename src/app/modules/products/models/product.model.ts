@@ -11,3 +11,12 @@ export interface IProduct {
   isDelivered: boolean;
   image: string;
 }
+
+export interface IDelivery {
+  serialNumber: number;
+  pid: number;
+  fullName: string;
+  email: string;
+  address: string;
+  phone: string;
+}
