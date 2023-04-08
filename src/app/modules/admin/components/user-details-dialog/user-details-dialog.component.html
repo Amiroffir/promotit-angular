@@ -1,0 +1,23 @@
+<h1
+  align="center"
+  mat-dialog-title
+  [innerText]="user.fullName + ' Details'"
+></h1>
+<mat-dialog-content class="edit-form-wrapper">
+  <div class="flex flex-column">
+    <mat-list *ngFor="let detail of detailsList" class="list-item">
+      <mat-list-item>
+        <span matListItemTitle [innerText]="detail.title"></span>
+      </mat-list-item>
+      <mat-list-item [innerText]="detail.value"></mat-list-item>
+    </mat-list>
+  </div>
+</mat-dialog-content>
+
+<!-- fullName: string;
+email: string;
+address: string;
+phone: string;
+earningStatus: number;
+twitterHandle: string;
+lastEarningsUpdate: string; -->

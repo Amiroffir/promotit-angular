@@ -9,6 +9,9 @@ import { AppModule } from 'src/app/app.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReportsPage } from './pages/reports-page/reports-page.page';
 import { AdminRoutes } from './enums/adminRoutes.enum';
+import { UserDetailsDialog } from './components/user-details-dialog/user-details-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 
 const routes: Routes = [
   { path: AdminRoutes.adminDashboard, component: AdminDashboard },
@@ -17,11 +20,16 @@ const routes: Routes = [
     component: ReportsPage,
     canActivate: [AdminAuthGuard],
   },
-]; //,{path: 'user-report', component:ToImplement},{path: 'campaigns-report', component:ToImplement},{path: 'tweets-report', component:ToImplement}];
-
+];
 @NgModule({
-  declarations: [AdminDashboard, ReportsPage],
-  imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
+  declarations: [AdminDashboard, ReportsPage, UserDetailsDialog],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    MatDialogModule,
+    MatListModule,
+  ],
   exports: [RouterModule, AdminDashboard],
   providers: [AdminAuthGuard],
 })

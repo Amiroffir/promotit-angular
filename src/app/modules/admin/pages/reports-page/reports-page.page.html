@@ -1,6 +1,10 @@
 <div class="reports-page-wrapper flex flex-column">
   <h1 class="reports-headline" [innerText]="reportType"></h1>
   <div class="table-wrap">
-    <report-table [data$]="reportData$" [type]="reportType"></report-table>
+    <report-table
+      [data$]="reportData$"
+      [type]="reportType"
+      (userDetailsClicked)="showUserDetails($event)"
+    ></report-table>
   </div>
 </div>

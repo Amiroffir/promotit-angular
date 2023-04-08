@@ -5,12 +5,16 @@
   <div class="details-left-wrapper flex flex-column">
     <h1 [innerText]="campaign?.campaignName"></h1>
     <h6 [innerText]="'by: ' + campaign?.nonProfitRepID">By:</h6>
-    <!-- {role === "Social Activist" && (
-        <Hashtag
-          hashtag={campaign.CampaignHash}
-          options={{ url: campaign.CampaignUrl, text: "PromotIt - " }}
-        />
-      )} -->
+    <a
+      *ngIf="role === 'Social Activist'"
+      class="twitter-share-button"
+      target="_blank"
+      href="https://twitter.com/intent/tweet?text?='PromotIt - '{{
+        campaign?.campaignName
+      }}&url={{ campaign?.campaignUrl }}&hashtags={{ campaign?.campaignHash }}"
+    >
+      Tweet #{{ campaign?.campaignHash }}
+    </a>
     <p [innerText]="campaign?.campaignDesc"></p>
   </div>
   <div class="details-image-wrapper flex flex-column">

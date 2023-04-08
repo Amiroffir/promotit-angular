@@ -48,7 +48,8 @@
           <td>
             <button
               class="btn btn-outline-info"
-              [innerText]="'Show User Details - Not Implemented'"
+              [innerText]="'Show User Details'"
+              (click)="onShowUserDetails(dataItem.userID)"
             ></button>
           </td>
         </ng-container>

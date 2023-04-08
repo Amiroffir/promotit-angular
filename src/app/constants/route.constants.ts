@@ -9,8 +9,9 @@ export enum AppRoutes {
   getRole = 'get-role',
 }
 
-export interface ISidebarItem {
-  name: string;
-  route: string;
-  icon?: string;
-}
+export const sidebarItems = {
+  home: { title: 'Home', route: '' },
+  about: { title: 'About', route: '/about' },
+  contact: { title: 'Contact Us', route: '/contact-us' },
+  logout: { title: 'Logout' },
+};

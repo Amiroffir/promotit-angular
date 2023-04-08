@@ -5,7 +5,11 @@
         <div class="icon">
           <!-- <HomeIcon /> -->
         </div>
-        <div class="title"></div>
+        <div
+          class="title"
+          [innerText]="sidebarItems.home.title"
+          [routerLink]="sidebarItems.home.route"
+        ></div>
       </a>
     </li>
     <li>
@@ -13,7 +17,11 @@
         <div class="icon">
           <!-- <InfoIcon /> -->
         </div>
-        <div class="title">About</div>
+        <div
+          class="title"
+          [innerText]="sidebarItems.about.title"
+          [routerLink]="sidebarItems.about.route"
+        ></div>
       </a>
     </li>
     <li>
@@ -21,17 +29,23 @@
         <div>
           <!-- <CallIcon /> -->
         </div>
-        <div class="title">Contact Us</div>
+        <div
+          class="title"
+          [innerText]="sidebarItems.contact.title"
+          [routerLink]="sidebarItems.contact.route"
+        >
+          Contact Us
+        </div>
       </a>
     </li>
-    <li>
+    <!-- <li>
       <a class="menu-link">
-        <div>
-          <!-- <Twitter /> -->
-        </div>
+        <div> -->
+    <!-- <Twitter /> -->
+    <!-- </div>
         <div class="title">Tweets</div>
       </a>
-    </li>
+    </li> -->
 
     <li *ngIf="(role$ | async) === 'Social Activist'">
       <a class="menu-link">
@@ -42,9 +56,13 @@
     <li>
       <a class="menu-link">
         <div>
-          <!-- <Logout /> -->
+          <!--  <Logout />  -->
         </div>
-        <div class="logout" (click)="logout()">Logout</div>
+        <div
+          class="logout"
+          [innerText]="sidebarItems.logout.title"
+          (click)="logout()"
+        ></div>
       </a>
     </li>
   </ul>

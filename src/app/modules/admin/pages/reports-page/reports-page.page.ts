@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, EMPTY, Observable } from 'rxjs';
+import { catchError, EMPTY, Observable, take, tap } from 'rxjs';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { UserDetailsDialog } from '../../components/user-details-dialog/user-details-dialog.component';
 import { ITweet } from '../../models/tweet.model';
-import { ISystemUser } from '../../models/user.model';
+import { ISystemUser, IUserExtendedDetails } from '../../models/user.model';
 import { ReportsDataService } from '../../services/reports-data.service';
 
 @Component({
@@ -16,7 +18,8 @@ export class ReportsPage {
   constructor(
     private route: ActivatedRoute,
     private campaignsData: CampaignsDataService,
-    private usersData: ReportsDataService
+    private usersData: ReportsDataService,
+    private dialog: MatDialog
   ) {}
 
   public reportType: string = '';
@@ -50,5 +53,21 @@ export class ReportsPage {
         })
       );
     }
+  }
+
+  public showUserDetails(userID: number): void {
+    this.usersData
+      .getUserDetails(userID)
+      .pipe(take(1))
+      .subscribe((user: IUserExtendedDetails) => {
+        this.openUserDetailsDialog(user);
+      });
+  }
+
+  public openUserDetailsDialog(user: any): void {
+    const dialogRef = this.dialog.open(UserDetailsDialog, {
+      width: '800px',
+      data: user,
+    });
   }
 }

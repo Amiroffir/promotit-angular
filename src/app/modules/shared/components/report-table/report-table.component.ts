@@ -97,6 +97,8 @@ export class ReportTableComponent {
   @Output() editCampaign: EventEmitter<ICampaign> =
     new EventEmitter<ICampaign>();
   @Output() deliveredClicked: EventEmitter<number> = new EventEmitter<number>();
+  @Output() userDetailsClicked: EventEmitter<number> =
+    new EventEmitter<number>();
 
   public onDeleteCampaign(id: number): void {
     this.deleteCampaign.emit(id);
@@ -106,6 +108,10 @@ export class ReportTableComponent {
   }
   public onDelivered(serialNumber: number) {
     this.deliveredClicked.emit(serialNumber);
+  }
+
+  public onShowUserDetails(userID: number): void {
+    this.userDetailsClicked.emit(userID);
   }
 
   public ngOnInit(): void {
