@@ -1,0 +1,14 @@
+<div class="filters-wrapper">
+  <mat-form-field appearance="fill">
+    <mat-label>Filter By User Type</mat-label>
+    <mat-select
+      [(value)]="selectedOption"
+      (selectionChange)="onSelectionChange()"
+    >
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let option of options" [value]="option.valueOf()">{{
+        option.valueOf()
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

@@ -1,4 +1,15 @@
 <div class="table-wrapper flex flex-column" *ngIf="data$ | async as data">
+  <!-- <filter-and-sort
+    [filterOptions]="filterOptions"
+    [sortOptions]="sortOptions"
+    (filter)="onFilter($event)"
+    (sort)="onSort($event)"
+  ></filter-and-sort> -->
+  <filter-and-sort
+    [reportType]="type"
+    (selectionChange)="onSelectionChange($event)"
+  >
+  </filter-and-sort>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -10,7 +21,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let dataItem of data">
+      <tr
+        *ngFor="
+          let dataItem of data
+            | filterByProperty : selectedOption : propertyToFilterBy
+        "
+      >
         <ng-container *ngFor="let item of reportTemplate">
           <td
             *ngIf="item.content !== 'campaignUrl'"
