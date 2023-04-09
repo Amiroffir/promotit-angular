@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SystemButtonComponent } from './components/system-button/system-button.component';
-import { SystemCardComponent } from './components/system-card/system-card.component';
-import { CardsListComponent } from './components/cards-list/cards-list.component';
-import { ReportTableComponent } from './components/report-table/report-table.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {
+  CardsListComponent,
+  ReportTableComponent,
+  SystemButtonComponent,
+  SystemCardComponent,
+} from './components/componentsIndex';
 
 @NgModule({
   declarations: [

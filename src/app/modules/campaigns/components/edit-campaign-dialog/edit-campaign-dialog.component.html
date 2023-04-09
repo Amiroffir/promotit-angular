@@ -2,19 +2,19 @@
 <mat-dialog-content class="edit-form-wrapper">
   <div class="flex flex-column">
     <mat-form-field appearance="fill">
-      <mat-label>Campaign Name</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignName"></mat-label>
       <input matInput [(ngModel)]="campaignToUpdate.campaignName" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Campaign Hashtag</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignHash"></mat-label>
       <input matInput [(ngModel)]="data.campaignHash" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Campaign Website</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignUrl"></mat-label>
       <input matInput [(ngModel)]="data.campaignUrl" />
     </mat-form-field>
     <mat-form-field appearance="fill" hintLabel="Max 255 characters">
-      <mat-label>Description</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignDesc"></mat-label>
       <textarea
         #textarea
         maxlength="255"
@@ -27,7 +27,12 @@
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="campaignToUpdate" cdkFocusInitial>
+  <button
+    mat-button
+    [disabled]="!validateCampaign()"
+    [mat-dialog-close]="campaignToUpdate"
+    cdkFocusInitial
+  >
     Done
   </button>
 </mat-dialog-actions>

@@ -3,7 +3,7 @@
   <div class="table-wrapper">
     <report-table
       [data$]="delivsList$"
-      type="Deliveries"
+      [type]="reportType"
       (deliveredClicked)="updateDelivered($event)"
     ></report-table>
   </div>

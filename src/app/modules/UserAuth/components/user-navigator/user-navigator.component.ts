@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
+import { Roles } from 'src/app/constants/roles.enum';
 import { Auth0Service } from '../../services/auth0.service';
 
 @Component({
@@ -17,19 +18,19 @@ export class UserNavigatorComponent implements OnInit {
         // It takes 2 values because of the first value is empty string(Default) and the second value is the actual role
         console.log('role: ', role);
         switch (role) {
-          case 'Admin':
+          case Roles.Admin:
             this.router.navigate(['/admin']);
             break;
-          case 'Business Rep':
+          case Roles.BusinessRep:
             this.router.navigate(['/business-owner']);
             break;
-          case 'Non Profit Rep':
+          case Roles.NonProfit:
             this.router.navigate(['/non-profit']);
             break;
-          case 'Social Activist':
+          case Roles.SocialActivist:
             this.router.navigate(['/social-activist']);
             break;
-          case 'unknown':
+          case Roles.Unknown:
             this.router.navigate(['/thank-you']);
             break;
           default:

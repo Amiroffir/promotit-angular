@@ -13,14 +13,13 @@ export class CardsListComponent {
     this.userRole = this.auth.role;
   }
   public userRole: string = '';
-  @Input() cardItems$: Observable<ICampaign[] | any> | null = from([]);
+  @Input() cardItems$: Observable<any> | null = from([]);
   @Input() cardType: string = '';
 
   @Output() cardButtonClicked: EventEmitter<string> =
     new EventEmitter<string>();
 
   public onCardButtonClicked(id: string): void {
-    console.log('id: ', id);
     this.cardButtonClicked.emit(id);
   }
 }

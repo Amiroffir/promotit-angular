@@ -1,8 +1,6 @@
 @brand-color: dodgerblue;
-@topic-text-color: #444;
-@base-text-size: 1.5em;
-@base-border: 3px solid black;
-@menu-height: 3em;
+@twitter-color: #1da1f2;
+@twitter-hover-color: #0e8ddb;
 
 .dashboard-wrapper {
   height: 100%;
@@ -15,4 +13,20 @@
   margin-top: 1rem;
   margin-bottom: 2.5rem;
   text-align: center;
+}
+
+.table-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.hover-transition {
+  transition: background-color 350ms ease 0s, color 350ms ease 0s,
+    box-shadow 250ms ease 0s, opacity 250ms ease 0s;
+}
+
+.button-hover {
+  background-color: @brand-color;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 5px 0px,
+    rgba(0, 0, 0, 0.12) 0px 3px 14px 3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px;
 }

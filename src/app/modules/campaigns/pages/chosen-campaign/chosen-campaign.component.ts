@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { catchError, EMPTY, Observable, take, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { catchError, EMPTY, Observable, take } from 'rxjs';
 import { CampaignsDataService } from '../../services/campaigns-data.service';
 import { ICampaign } from '../../models/campaign.model';
 import { ProductsDataService } from 'src/app/modules/products/services/products-data.service';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
-import { MatSnackBar, MatSnackBarAction } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Roles } from 'src/app/constants/roles.enum';
 
 @Component({
   selector: 'chosen-campaign',
@@ -13,36 +14,38 @@ import { MatSnackBar, MatSnackBarAction } from '@angular/material/snack-bar';
   styleUrls: ['./chosen-campaign.page.less'],
 })
 export class ChosenCampaignPage implements OnInit {
+  public campaignDetails$: Observable<ICampaign> | null = null;
+  public productsList$: Observable<any> | null = null;
+  public campaignId: string = '';
+  public userRole: string = '';
+  public email: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private campaignsDataService: CampaignsDataService,
     private productsDataService: ProductsDataService,
     private auth: Auth0Service,
-    private _snackBar: MatSnackBar
+    private _snack: SnackbarService
   ) {
     this.campaignId = this.route.snapshot.params['id'];
     this.userRole = this.auth.role;
     this.email = this.auth.userEmail;
   }
 
-  // This is the code for retrieving the campaign details from the cache - optional
+  // Optional - simple code for retrieving the campaign details from the cache
   // public campaignDetails$: Observable<ICampaign> = this.campaignsDataService.campaignsListCached$.pipe(
   //   map((campaigns: ICampaign[]) => {
   //     return campaigns.find((campaign: ICampaign) => campaign.id === this.campaignId);
   //   })
   // );
-  public campaignDetails$: Observable<ICampaign> | null = null;
-  public productsList$: Observable<any> | null = null;
-  public campaignId: string = '';
-  public userRole: string = '';
-  public email: string = '';
+
   public ngOnInit(): void {
     this.campaignDetails$ = this.campaignsDataService
       .getCampaignById(this.campaignId)
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.openSnackBar(error);
+          this._snack.errorSnackBar(error);
           return EMPTY;
         })
       );
@@ -50,21 +53,21 @@ export class ChosenCampaignPage implements OnInit {
   }
 
   public handleBuy(pid: string): void {
-    this.openSnackBar('Buying product...', 'Please wait');
+    this._snack.openSnackBar('Buying product...', 'Please wait');
     this.productsDataService
       .handleBuyProduct(pid, this.email)
       .pipe(
         take(1),
         catchError((error: any) => {
           console.error(error);
-          this.openSnackBar(error);
+          this._snack.errorSnackBar(error);
           return EMPTY;
         })
       )
       .subscribe({
-        next: (res: boolean) => {
-          if (res) {
-            this.openSnackBar('Product bought successfully');
+        next: (bought: boolean) => {
+          if (bought) {
+            this._snack.openSnackBar('Purchase completed!');
             this.getUpdatedProductsList();
           }
         },
@@ -77,15 +80,17 @@ export class ChosenCampaignPage implements OnInit {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.openSnackBar(error);
+          this._snack.errorSnackBar(error);
           return EMPTY;
         })
       );
   }
 
-  private openSnackBar(message: string, action?: string) {
-    this._snackBar.open(message, action, {
-      duration: 4000,
-    });
+  public get isSocialActivist(): boolean {
+    return this.userRole === Roles.SocialActivist;
+  }
+
+  public get isBusiness(): boolean {
+    return this.userRole === Roles.BusinessRep;
   }
 }

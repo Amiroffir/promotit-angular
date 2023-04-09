@@ -1,11 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { listItem } from '../../models/details-list.model';
 import { IUserExtendedDetails } from '../../models/user.model';
-
-interface listItem {
-  title: string;
-  value: string;
-}
 
 @Component({
   selector: 'user-details-dialog',

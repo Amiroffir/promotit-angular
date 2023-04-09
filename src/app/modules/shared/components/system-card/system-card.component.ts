@@ -1,37 +1,40 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
-import { IProduct } from 'src/app/modules/products/models/product.model';
-import { LocalStorageService } from 'src/app/services/local-stroage.service';
-
-interface ICardDetails {
-  cardDetails: ICampaign | IProduct | null;
-}
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Roles } from 'src/app/constants/roles.enum';
 
 @Component({
   selector: 'system-card',
   templateUrl: './system-card.component.html',
   styleUrls: ['./system-card.component.less'],
 })
-export class SystemCardComponent implements OnInit {
+export class SystemCardComponent {
+  public Roles = Roles;
+
   constructor() {}
 
   @Input() id: number = 0;
   @Input() userRole: string = '';
   @Input() cardType: string = ''; // Will be used to determine if product/campaign
-  @Input() cardDetails: ICampaign | any | null = null;
+  @Input() cardDetails: any = null;
 
   @Output() cardButtonClicked: EventEmitter<string> =
     new EventEmitter<string>();
-  @Output() productCardClicked: EventEmitter<Event> = new EventEmitter<Event>();
 
-  public onCardButtonClicked(id: number | undefined): void {
+  public onCardButtonClicked(id: number): void {
     if (this.cardDetails) {
-      this.cardButtonClicked.emit(this.cardDetails.id.toString());
+      this.cardButtonClicked.emit(id.toString());
     }
   }
 
-  ngOnInit(): void {
-    console.log(' I am in system-card.component.ts ');
+  public get isCampaign(): boolean {
+    return this.cardType === 'campaign';
+  }
+  public get isProduct(): boolean {
+    return this.cardType === 'product';
+  }
+  public get isBusiness(): boolean {
+    return this.userRole === Roles.BusinessRep;
+  }
+  public get isSocialActivist(): boolean {
+    return this.userRole === Roles.SocialActivist;
   }
 }

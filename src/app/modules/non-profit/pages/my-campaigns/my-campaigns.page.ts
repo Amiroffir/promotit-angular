@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, catchError, EMPTY, take, tap } from 'rxjs';
+import { ReportTypes } from 'src/app/modules/admin/enums/reportTypes.enum';
 import { EditCampaignDialog } from 'src/app/modules/campaigns/components/edit-campaign-dialog/edit-campaign-dialog.component';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'my-campaigns',
@@ -14,14 +15,14 @@ import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 })
 export class MyCampaignsPage implements OnInit {
   private _userEmail: string = '';
-  public reportType: string = 'My Campaigns';
+  public reportType: string = ReportTypes.MyCampaignsReport;
   public myCampaignsList$: Observable<ICampaign[]> | null = null;
 
   constructor(
     private campaignsData: CampaignsDataService,
     private auth: Auth0Service,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    private _snack: SnackbarService
   ) {
     this._userEmail = this.auth.userEmail;
   }
@@ -31,7 +32,7 @@ export class MyCampaignsPage implements OnInit {
       .pipe(
         catchError((error: any) => {
           console.error(error);
-          this.openSnackBar(error);
+          this._snack.errorSnackBar(error);
           return EMPTY;
         })
       );
@@ -42,16 +43,8 @@ export class MyCampaignsPage implements OnInit {
       width: '800px',
       data: campaign,
     });
-    dialogRef.afterClosed().subscribe((result: ICampaign) => {
-      if (result) {
-        this.updateCampaign(result);
-      }
-    });
-  }
-
-  private openSnackBar(message: string, action?: string) {
-    this._snackBar.open(message, action, {
-      duration: 4000,
+    dialogRef.afterClosed().subscribe((updatedCampaign: ICampaign) => {
+      this.updateCampaign(updatedCampaign);
     });
   }
 
@@ -66,17 +59,17 @@ export class MyCampaignsPage implements OnInit {
               .pipe(
                 catchError((error: any) => {
                   console.error(error);
-                  this.openSnackBar(error);
+                  this._snack.errorSnackBar(error);
                   return EMPTY;
                 })
               );
-            this.openSnackBar('Campaign updated successfully');
+            this._snack.openSnackBar('Campaign updated successfully');
           }
         }),
         take(1),
         catchError((error: any) => {
           console.error(error);
-          this.openSnackBar(error);
+          this._snack.errorSnackBar(error);
           return EMPTY;
         })
       )
@@ -94,17 +87,17 @@ export class MyCampaignsPage implements OnInit {
               .pipe(
                 catchError((error: any) => {
                   console.error(error);
-                  this.openSnackBar(error);
+                  this._snack.errorSnackBar(error);
                   return EMPTY;
                 })
               );
-            this.openSnackBar('Campaign deleted successfully');
+            this._snack.openSnackBar('Campaign deleted successfully');
           }
         }),
         take(1),
         catchError((error: any) => {
           console.error(error);
-          this.openSnackBar(error);
+          this._snack.errorSnackBar(error);
           return EMPTY;
         })
       )

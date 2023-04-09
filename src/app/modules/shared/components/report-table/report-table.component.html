@@ -25,7 +25,7 @@
             ></a>
           </td>
         </ng-container>
-        <ng-container *ngIf="type === 'My Campaigns'">
+        <ng-container *ngIf="isMyCampaignsReport">
           <td>
             <div class="flex">
               <div class="flex flex-fill-remaining">
@@ -44,7 +44,7 @@
               </div>
             </div></td
         ></ng-container>
-        <ng-container *ngIf="type === 'Users'">
+        <ng-container *ngIf="isUsersReport">
           <td>
             <button
               class="btn btn-outline-info"
@@ -53,7 +53,7 @@
             ></button>
           </td>
         </ng-container>
-        <ng-container *ngIf="type === 'Deliveries'">
+        <ng-container *ngIf="isDeliveriesReport">
           <td>
             <button
               class="btn btn-outline-info"

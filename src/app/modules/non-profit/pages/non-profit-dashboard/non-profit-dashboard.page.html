@@ -2,20 +2,19 @@
   <div class="non-profit-headlines flex">
     <div class="headline-btn-wrapper flex flex-column">
       <h1 class="headline">My Campaigns</h1>
-      <button class="non-profit-dash-btn" routerLink="my-campaigns">
-        Here should be Arrow
+      <button class="non-profit-dash-btn" [routerLink]="routes.myCampaignsPage">
+        <i class="fa-solid fa-arrow-up"></i>
       </button>
     </div>
     <div class="headline-btn-wrapper flex flex-column">
       <h1 class="headline">Add Campaign</h1>
-      <button class="non-profit-dash-btn" routerLink="add-campaign">
-        Here should be Arrow
+      <button class="non-profit-dash-btn" [routerLink]="routes.addCampaign">
+        <i class="fa-solid fa-arrow-up"></i>
       </button>
     </div>
   </div>
   <h1 class="campaigns-headline">Running Campaigns</h1>
   <div class="running-campaigns flex">
-    <!-- Should be added [cardItems]="campaigns" input from the dashboard component -->
     <cards-list
       [cardItems$]="campaignsList$"
       [cardType]="'campaign'"

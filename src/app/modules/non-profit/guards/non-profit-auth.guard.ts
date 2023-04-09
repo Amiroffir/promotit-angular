@@ -6,6 +6,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Roles } from 'src/app/constants/roles.enum';
 import { Auth0Service } from '../../UserAuth/services/auth0.service';
 
 @Injectable({
@@ -22,6 +23,6 @@ export class NonProfitAuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.authService.isCurrentRole('Non Profit Rep');
+    return this.authService.isCurrentRole(Roles.NonProfit);
   }
 }

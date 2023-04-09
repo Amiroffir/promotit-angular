@@ -1,4 +1,5 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
 
 html,
 body {
@@ -14,6 +15,7 @@ body {
 }
 
 router-outlet + * {
+  // This is a hack to fix the issue with the router-outlet not being the first element in the body
   width: 100%;
   height: 100%;
 }
@@ -21,16 +23,13 @@ router-outlet + * {
 @media screen and (max-width: 768px) {
   html,
   body {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
 @media screen and (max-width: 576px) {
   html,
   body {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

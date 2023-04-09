@@ -1,85 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, take } from 'rxjs';
-import { ISystemUser } from 'src/app/modules/admin/models/user.model';
+import { ReportTypes } from 'src/app/modules/admin/enums/reportTypes.enum';
 import { ICampaign } from '../../../campaigns/models/campaign.model';
+import {
+  IReportItem,
+  campaignReportTemplate,
+  userReportTemplate,
+  tweetReportTemplate,
+  deliveryReportTemplate,
+} from '../../constants/report-types.enum';
 
 // NEED TO IMLEMENT SORTING AND FILTERING //
-
-interface IReportItem {
-  header: string;
-  content: string;
-}
-const campaignReportTemplate: IReportItem[] = [
-  {
-    header: 'Campaign Name',
-    content: 'campaignName',
-  },
-  {
-    header: 'Campaign Hash',
-    content: 'campaignHash',
-  },
-  {
-    header: 'By',
-    content: 'nonProfitRepID',
-  },
-  {
-    header: 'Website',
-    content: 'campaignUrl',
-  },
-];
-
-const userReportTemplate: IReportItem[] = [
-  {
-    header: 'User Type',
-    content: 'userType',
-  },
-  {
-    header: 'Full Name',
-    content: 'fullName',
-  },
-  {
-    header: 'Email',
-    content: 'email',
-  },
-];
-
-const tweetReportTemplate: IReportItem[] = [
-  {
-    header: 'Handle',
-    content: 'handle',
-  },
-  {
-    header: 'Type',
-    content: 'type',
-  },
-  {
-    header: 'Tweets Count',
-    content: 'tweetsCount',
-  },
-];
-
-const deliveryReportTemplate: IReportItem[] = [
-  {
-    header: 'Product ID',
-    content: 'pid',
-  },
-  {
-    header: 'Full Name',
-    content: 'fullName',
-  },
-  {
-    header: 'Email',
-    content: 'email',
-  },
-  {
-    header: 'Address',
-    content: 'address',
-  },
-  {
-    header: 'Phone',
-    content: 'phone',
-  },
-];
 
 @Component({
   selector: 'report-table',
@@ -109,23 +40,43 @@ export class ReportTableComponent {
   public onDelivered(serialNumber: number) {
     this.deliveredClicked.emit(serialNumber);
   }
-
   public onShowUserDetails(userID: number): void {
     this.userDetailsClicked.emit(userID);
   }
 
   public ngOnInit(): void {
-    if (this.type === 'Campaigns' || this.type === 'My Campaigns') {
-      this.reportTemplate = campaignReportTemplate;
+    switch (this.type) {
+      case ReportTypes.CampaignsReport:
+      case ReportTypes.MyCampaignsReport:
+        this.reportTemplate = campaignReportTemplate;
+        break;
+      case ReportTypes.UserReport:
+        this.reportTemplate = userReportTemplate;
+        break;
+      case ReportTypes.TweetsReport:
+        this.reportTemplate = tweetReportTemplate;
+        break;
+      case ReportTypes.DeliveriesReport:
+        this.reportTemplate = deliveryReportTemplate;
+        break;
+      default:
+        break;
     }
-    if (this.type === 'Users') {
-      this.reportTemplate = userReportTemplate;
-    }
-    if (this.type === 'Tweets') {
-      this.reportTemplate = tweetReportTemplate;
-    }
-    if (this.type === 'Deliveries') {
-      this.reportTemplate = deliveryReportTemplate;
-    }
+  }
+
+  public get isCampaignsReport(): boolean {
+    return this.type === ReportTypes.CampaignsReport;
+  }
+  public get isMyCampaignsReport(): boolean {
+    return this.type === ReportTypes.MyCampaignsReport;
+  }
+  public get isUsersReport(): boolean {
+    return this.type === ReportTypes.UserReport;
+  }
+  public get isTweetsReport(): boolean {
+    return this.type === ReportTypes.TweetsReport;
+  }
+  public get isDeliveriesReport(): boolean {
+    return this.type === ReportTypes.DeliveriesReport;
   }
 }

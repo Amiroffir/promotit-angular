@@ -1,69 +1,46 @@
 <div class="menu-wrapper flex flex-column">
   <ul class="menu-options-list">
     <li>
-      <a class="menu-link">
+      <a class="menu-link" [routerLink]="sidebarItems.home.route">
         <div class="icon">
-          <!-- <HomeIcon /> -->
+          <i class="fa-solid fa-house"></i>
         </div>
-        <div
-          class="title"
-          [innerText]="sidebarItems.home.title"
-          [routerLink]="sidebarItems.home.route"
-        ></div>
+        <div class="title" [innerText]="sidebarItems.home.title"></div>
       </a>
     </li>
     <li>
-      <a class="menu-link">
+      <a class="menu-link" [routerLink]="sidebarItems.about.route">
         <div class="icon">
-          <!-- <InfoIcon /> -->
+          <i class="fa-solid fa-circle-info"></i>
         </div>
-        <div
-          class="title"
-          [innerText]="sidebarItems.about.title"
-          [routerLink]="sidebarItems.about.route"
-        ></div>
+        <div class="title" [innerText]="sidebarItems.about.title"></div>
       </a>
     </li>
     <li>
-      <a class="menu-link">
-        <div>
-          <!-- <CallIcon /> -->
+      <a class="menu-link" [routerLink]="sidebarItems.contact.route">
+        <div class="icon">
+          <i class="fa-solid fa-phone"></i>
         </div>
-        <div
-          class="title"
-          [innerText]="sidebarItems.contact.title"
-          [routerLink]="sidebarItems.contact.route"
-        >
-          Contact Us
-        </div>
+        <div class="title" [innerText]="sidebarItems.contact.title"></div>
       </a>
     </li>
-    <!-- <li>
-      <a class="menu-link">
-        <div> -->
-    <!-- <Twitter /> -->
-    <!-- </div>
-        <div class="title">Tweets</div>
-      </a>
-    </li> -->
-
-    <li *ngIf="(role$ | async) === 'Social Activist'">
-      <a class="menu-link">
-        <wallet></wallet>
-      </a>
-    </li>
-
-    <li>
-      <a class="menu-link">
-        <div>
-          <!--  <Logout />  -->
-        </div>
-        <div
-          class="logout"
-          [innerText]="sidebarItems.logout.title"
-          (click)="logout()"
-        ></div>
-      </a>
-    </li>
+    <ng-container *ngIf="role$ | async">
+      <li *ngIf="(role$ | async) === roles.SocialActivist">
+        <a class="menu-link">
+          <wallet></wallet>
+        </a>
+      </li>
+      <li>
+        <a class="menu-link" (click)="logout()">
+          <div>
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </div>
+          <div
+            class="logout title"
+            [innerText]="sidebarItems.logout.title"
+          ></div>
+        </a>
+      </li>
+    </ng-container>
   </ul>
 </div>

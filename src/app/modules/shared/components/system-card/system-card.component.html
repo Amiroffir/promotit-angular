@@ -1,8 +1,8 @@
 <div class="card">
-  <ng-container *ngIf="cardType === 'campaign'">
+  <ng-container *ngIf="isCampaign">
     <ng-container *ngTemplateOutlet="campaign"></ng-container>
   </ng-container>
-  <ng-container *ngIf="cardType === 'product'">
+  <ng-container *ngIf="isProduct">
     <ng-container *ngTemplateOutlet="products"></ng-container>
   </ng-container>
 
@@ -25,13 +25,13 @@
         width="{20}"
         height="{150}"
       />
-      <div class="operation-btn" *ngIf="userRole === 'Business Rep'">
+      <div class="operation-btn" *ngIf="isBusiness">
         <system-button
           (click)="onCardButtonClicked(cardDetails?.id)"
           text="Donate Products"
         ></system-button>
       </div>
-      <div class="operation-btn" *ngIf="userRole === 'Social Activist'">
+      <div class="operation-btn" *ngIf="isSocialActivist">
         <system-button
           (click)="onCardButtonClicked(cardDetails?.id)"
           text="Promote & Shop"

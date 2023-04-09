@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, EMPTY } from 'rxjs';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
-import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
+import { BusinessRoutes } from '../../enums/businessRoutes.enum';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'business-dashboard',
@@ -12,24 +13,22 @@ import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 })
 export class BusinessDashboard {
   constructor(
-    private auth: Auth0Service,
     private router: Router,
-    private campaignsData: CampaignsDataService
+    private campaignsData: CampaignsDataService,
+    private _snack: SnackbarService
   ) {}
 
+  public routes = BusinessRoutes;
   public campaignsList$: Observable<ICampaign[]> =
     this.campaignsData.campaignsListCached$.pipe(
       catchError((error: any, caught: Observable<ICampaign[]>) => {
         console.error(error);
+        this._snack.errorSnackBar(error);
         return EMPTY;
       })
     );
 
   public onCardButtonClicked(id: string): void {
-    this.router.navigate([`/business-owner/${id}`]);
-  }
-
-  public logout(): void {
-    this.auth.logout();
+    this.router.navigate([`${this.routes.businessOwnerPrefix}${id}`]);
   }
 }

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { catchError, Observable, take, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, Observable, take, tap, throwError } from 'rxjs';
+import { ReportTypes } from 'src/app/modules/admin/enums/reportTypes.enum';
+import { IDelivery } from 'src/app/modules/products/models/product.model';
 import { ProductsDataService } from 'src/app/modules/products/services/products-data.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'pending-deliveries',
@@ -8,12 +11,16 @@ import { ProductsDataService } from 'src/app/modules/products/services/products-
   styleUrls: ['./pending-deliveries.page.less'],
 })
 export class PendingDeliveriesPage {
-  constructor(private productsData: ProductsDataService) {}
+  constructor(
+    private productsData: ProductsDataService,
+    private _snack: SnackbarService
+  ) {}
 
-  public delivsList$: Observable<any> | null = null;
+  public reportType = ReportTypes.DeliveriesReport;
+  public delivsList$: Observable<IDelivery[]> | null = null;
 
   public ngOnInit(): void {
-    this.delivsList$ = this.productsData.getPendingDeliveries();
+    this._updateDelivsList();
   }
 
   public updateDelivered(serialNumber: number) {
@@ -23,16 +30,26 @@ export class PendingDeliveriesPage {
         take(1),
         tap((updated: boolean) => {
           if (updated) {
-            this.delivsList$ = this.productsData.getPendingDeliveries();
+            this._updateDelivsList();
           }
         }),
         catchError((error: any) => {
           console.error(error);
-          return throwError(() => new Error(error));
+          this._snack.errorSnackBar(error);
+          return EMPTY;
         })
       )
-      .subscribe((updated) => {
-        console.log(updated);
-      });
+      .subscribe();
+  }
+
+  private _updateDelivsList() {
+    this.delivsList$ = this.productsData.getPendingDeliveries().pipe(
+      take(1),
+      catchError((error: any) => {
+        console.error(error);
+        this._snack.errorSnackBar(error);
+        return EMPTY;
+      })
+    );
   }
 }

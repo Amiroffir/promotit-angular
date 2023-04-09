@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoadingComponent } from './components/loading/loading.component';
+import { UserAuthModule } from './modules/UserAuth/user-auth.module';
+import { AppRoutes } from './constants/route.constants';
 import { AdminAuthGuard } from './modules/admin/guards/admin-auth.guard';
 import { BusinessAuthGuard } from './modules/business-owner/guards/business-auth.guard';
 import { NonProfitAuthGuard } from './modules/non-profit/guards/non-profit-auth.guard';
 import { SocialActAuthGuard } from './modules/social-activist/guards/social-act-auth.guard';
-import { ThankYouComponent } from './modules/UserAuth/components/thank-you/thank-you.component';
-import { UserNavigatorComponent } from './modules/UserAuth/components/user-navigator/user-navigator.component';
-import { UnauthorizedUserComponent } from './modules/UserAuth/pages/unauthorized-user/unauthorized-user.page';
-import { UserAuthModule } from './modules/UserAuth/user-auth.module';
-import { AppRoutes } from './constants/route.constants';
+import { LoadingComponent } from './components/loading/loading.component';
+import { AboutPage, ContactUsPage } from './components/componentsIndex';
+import {
+  ThankYouComponent,
+  UnauthorizedUserComponent,
+  UserNavigatorComponent,
+} from './modules/UserAuth/components/componentsIndex';
 
 const routes: Routes = [
-  // { path: 'about', component: ToImplement },
-  // {path: 'contact-us', component: ToImplement},
+  { path: 'about', component: AboutPage },
+  { path: 'contact-us', component: ContactUsPage },
   { path: AppRoutes.unauthorized, component: UnauthorizedUserComponent },
   { path: AppRoutes.thankYou, component: ThankYouComponent },
   { path: AppRoutes.getRole, component: LoadingComponent },

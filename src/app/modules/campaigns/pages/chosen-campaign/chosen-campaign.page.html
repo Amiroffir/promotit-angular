@@ -3,14 +3,14 @@
     <campaign-details [campaign$]="campaignDetails$"></campaign-details>
   </div>
   <div class="campaign-operations-wrapper">
-    <ng-container *ngIf="userRole === 'Social Activist'">
+    <ng-container *ngIf="isSocialActivist">
       <cards-list
         (cardButtonClicked)="handleBuy($event)"
         [cardItems$]="productsList$"
         [cardType]="'product'"
       ></cards-list>
     </ng-container>
-    <ng-container *ngIf="userRole === 'Business Rep'">
+    <ng-container *ngIf="isBusiness">
       <products-donation></products-donation>
     </ng-container>
   </div>

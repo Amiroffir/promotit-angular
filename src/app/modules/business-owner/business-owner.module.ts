@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BusinessDashboard } from './pages/business-dashboard/business-dashboard.page';
 import { RouterModule, Routes } from '@angular/router';
-import { BusinessAuthGuard } from './guards/business-auth.guard';
-import { CardsListComponent } from '../shared/components/cards-list/cards-list.component';
-import { SharedModule } from '../shared/shared.module';
-import { ChosenCampaignPage } from '../campaigns/pages/chosen-campaign/chosen-campaign.component';
 import { CampaignsModule } from '../campaigns/campaigns.module';
-import { PendingDeliveriesPage } from './pages/pending-deliveries/pending-deliveries.page';
+import { SharedModule } from '../shared/shared.module';
+import { BusinessAuthGuard } from './guards/business-auth.guard';
+import { ChosenCampaignPage } from '../campaigns/pages/chosen-campaign/chosen-campaign.component';
+import { BusinessDashboard, PendingDeliveriesPage } from './pages/pagesIndex';
 import { BusinessRoutes } from './enums/businessRoutes.enum';
-import { CampaignsDataService } from '../campaigns/services/campaigns-data.service';
 
 const routes: Routes = [
   { path: BusinessRoutes.businessDashboard, component: BusinessDashboard },

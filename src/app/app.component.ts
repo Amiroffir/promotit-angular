@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { Auth0Service } from './modules/UserAuth/services/auth0.service';
 
 @Component({
@@ -7,10 +6,6 @@ import { Auth0Service } from './modules/UserAuth/services/auth0.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(private auth: Auth0Service) {}
-  public ngOnInit(): void {}
-  public logout(): void {
-    this.auth.logout();
-  }
 }

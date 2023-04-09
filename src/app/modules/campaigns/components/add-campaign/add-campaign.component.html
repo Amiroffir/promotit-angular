@@ -1,75 +1,24 @@
 <div class="add-campaign-wrapper">
   <h1 class="headline">Add New Campaign</h1>
-  <!-- <div class="form-border">
-    <div class="form-floating mb-2">
-      <input
-        type="text"
-        class="form-control"
-        id="floatingInput"
-        placeholder="Campaign Name"
-      />
-      <label htmlfor="floatingInput">Campaign Name</label>
-    </div>
-    <div class="form-floating mb-2">
-      <input
-        type="text"
-        class="form-control"
-        id="floatingInput"
-        placeholder="# Your Hashtag"
-      />
-      <label htmlFor="floatingInput">Campaign Hashtag</label>
-    </div>
-    <div class="form-floating mb-2">
-      <input
-        type="text"
-        class="form-control"
-        id="floatingInput"
-        placeholder="URL"
-      />
-      <label htmlFor="floatingInput">Campaign Landing Page</label>
-    </div>
-    <div class="form-floating mb-2">
-      <textarea
-        class="form-control"
-        placeholder="About My Campaign"
-        id="floatingTextarea"
-        maxLength="{254}"
-      ></textarea>
-      <div class="characters-left">Characters left</div>
-      <label htmlFor="floatingTextarea">Description</label>
-    </div>
-    <div class="form-floating mb-2">
-      <input
-        type="text"
-        class="form-control"
-        id="floatingInput"
-        placeholder="Image"
-      />
-      <label htmlFor="floatingInput">Campaign Image Url</label>
-    </div>
-    <system-button text="Add Campaign" (click)=""> </system-button>
-  </div>
-</div> -->
-
   <div class="form-border flex flex-column">
     <mat-form-field appearance="fill">
-      <mat-label>Campaign Name</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignName"></mat-label>
       <input matInput [(ngModel)]="campaignToAdd.campaignName" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Campaign Hashtag</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignHash"></mat-label>
       <input matInput [(ngModel)]="campaignToAdd.campaignHash" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Campaign Website</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignUrl"></mat-label>
       <input matInput [(ngModel)]="campaignToAdd.campaignUrl" />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Campaign Image Url</mat-label>
+      <mat-label [innerText]="campaignHeaders.Image"></mat-label>
       <input matInput [(ngModel)]="campaignToAdd.image" />
     </mat-form-field>
     <mat-form-field appearance="fill" hintLabel="Max 255 characters">
-      <mat-label>Description</mat-label>
+      <mat-label [innerText]="campaignHeaders.CampaignDesc"></mat-label>
       <textarea
         #textarea
         maxlength="255"

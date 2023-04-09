@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NonProfitDashboard } from './pages/non-profit-dashboard/non-profit-dashboard.page';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { MyCampaignsPage } from './pages/my-campaigns/my-campaigns.page';
 import { CampaignsModule } from '../campaigns/campaigns.module';
-import { AddCampaignComponent } from '../campaigns/components/add-campaign/add-campaign.component';
-import { NonProfitAuthGuard } from './guards/non-profit-auth.guard';
-import { NonProfitRoutes } from './enums/nonProfitRoutes.enum';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NonProfitAuthGuard } from './guards/non-profit-auth.guard';
+import { NonProfitRoutes } from './enums/nonProfitRoutes.enum';
+import { AddCampaignComponent } from '../campaigns/components/add-campaign/add-campaign.component';
+import { MyCampaignsPage, NonProfitDashboard } from './pages/pagesIndex';
 
 const routes: Routes = [
   {

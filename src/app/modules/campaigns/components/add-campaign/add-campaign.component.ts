@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, EMPTY, take, tap } from 'rxjs';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { CampaignHeaders } from '../../constants/campaignForm.constant';
 import { ICampaign } from '../../models/campaign.model';
 import { CampaignsDataService } from '../../services/campaigns-data.service';
 
@@ -11,9 +13,11 @@ import { CampaignsDataService } from '../../services/campaigns-data.service';
 })
 export class AddCampaignComponent implements OnInit {
   public campaignToAdd: ICampaign = {} as ICampaign;
+  public campaignHeaders = CampaignHeaders;
   constructor(
     private campaignsData: CampaignsDataService,
-    private auth: Auth0Service
+    private auth: Auth0Service,
+    private _snack: SnackbarService
   ) {}
 
   public ngOnInit(): void {
@@ -21,7 +25,10 @@ export class AddCampaignComponent implements OnInit {
   }
 
   public onAddCampaign(): void {
-    console.log(this.campaignToAdd);
+    if (!this.validateForm()) {
+      this._snack.errorSnackBar('Please fill all the fields');
+      return;
+    }
     this.campaignsData
       .createCampaign(this.campaignToAdd)
       .pipe(
@@ -30,9 +37,6 @@ export class AddCampaignComponent implements OnInit {
             this.campaignToAdd = {} as ICampaign;
             this.campaignsData.campaignsListCached$.pipe(
               take(1),
-              tap((campaigns: ICampaign[]) => {
-                console.log(campaigns);
-              }),
               catchError((error: Error) => {
                 console.error(error);
                 return EMPTY;
@@ -41,11 +45,25 @@ export class AddCampaignComponent implements OnInit {
           }
         }),
         take(1),
-        catchError((error: Error) => {
+        catchError((error: any) => {
           console.error(error);
+          this._snack.errorSnackBar(error);
           return EMPTY;
         })
       )
       .subscribe();
+  }
+
+  public validateForm(): boolean {
+    if (
+      !this.campaignToAdd.campaignName ||
+      !this.campaignToAdd.campaignDesc ||
+      !this.campaignToAdd.image ||
+      !this.campaignToAdd.campaignHash ||
+      !this.campaignToAdd.campaignUrl
+    ) {
+      return false;
+    }
+    return true;
   }
 }

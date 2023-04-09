@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Observable, catchError, EMPTY } from 'rxjs';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { NonProfitRoutes } from '../../enums/nonProfitRoutes.enum';
 
 @Component({
   selector: 'non-profit-dashboard',
@@ -9,12 +11,15 @@ import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
   styleUrls: ['./non-profit-dashboard.page.less'],
 })
 export class NonProfitDashboard {
-  constructor(private campaignsData: CampaignsDataService) {}
-
+  constructor(
+    private campaignsData: CampaignsDataService,
+    private _snack: SnackbarService
+  ) {}
+  public routes = NonProfitRoutes;
   public campaignsList$: Observable<ICampaign[]> =
     this.campaignsData.campaignsListCached$.pipe(
       catchError((error: any, caught: Observable<ICampaign[]>) => {
-        console.error(error);
+        this._snack.errorSnackBar(error);
         return EMPTY;
       })
     );

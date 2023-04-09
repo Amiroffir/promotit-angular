@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, EMPTY, take, tap } from 'rxjs';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { IProduct } from '../../models/product.model';
 import { ProductsDataService } from '../../services/products-data.service';
 
@@ -18,13 +18,17 @@ export class ProductsDonationComponent {
     private auth: Auth0Service,
     private route: ActivatedRoute,
     private productsData: ProductsDataService,
-    private _snackBar: MatSnackBar
+    private _snackBar: SnackbarService
   ) {}
 
   public addToProductsList(): void {
+    if (!this.validateProduct()) {
+      this._snackBar.openSnackBar('Please fill all the fields');
+      return;
+    }
     this.product.sysId = Math.random().toString(36).substring(2, 15);
     this.productsToDonate.push(this.product);
-    this.product = {} as IProduct;
+    this.product = {} as IProduct; // reset product
   }
 
   public removeFromProductsList(sysId: string): void {
@@ -44,12 +48,12 @@ export class ProductsDonationComponent {
         tap((isAdded: boolean) => {
           if (isAdded) {
             this.productsToDonate = [];
-            this.openSnackBar('Products donated successfully');
+            this._snackBar.openSnackBar('Products donated successfully');
           }
         }),
         catchError((error: any) => {
           console.error(error);
-          this.openSnackBar(error);
+          this._snackBar.errorSnackBar('Error donating products');
           return EMPTY;
         }),
         take(1)
@@ -57,9 +61,15 @@ export class ProductsDonationComponent {
       .subscribe();
   }
 
-  private openSnackBar(message: string, action?: string): void {
-    this._snackBar.open(message, action, {
-      duration: 4000,
-    });
+  private validateProduct(): boolean {
+    if (
+      !this.product.productName ||
+      !this.product.productId ||
+      !this.product.price ||
+      !this.product.image
+    ) {
+      return false;
+    }
+    return true;
   }
 }

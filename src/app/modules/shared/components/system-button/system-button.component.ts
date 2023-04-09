@@ -9,8 +9,4 @@ export class SystemButtonComponent {
   @Input() public text: string = '';
 
   constructor() {}
-
-  public onClick() {
-    console.log('clicked');
-  }
 }

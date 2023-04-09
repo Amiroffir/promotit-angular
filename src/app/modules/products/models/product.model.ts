@@ -20,3 +20,31 @@ export interface IDelivery {
   address: string;
   phone: string;
 }
+
+export interface IServerDelivery {
+  ProductSerialNumber: number;
+  PID: number;
+  FullName: string;
+  Email: string;
+  Address: string;
+  Phone: string;
+}
+
+export interface IServerProduct {
+  id: number;
+  productID: number;
+  productName: string;
+  price: number;
+  donatedBy: number;
+  donatedTo: number;
+  isBought: boolean;
+  buyerID: number | null;
+  isDelivered: boolean;
+  image: string;
+}
+
+export interface IProductToBuyRequest {
+  id: string;
+  email: string;
+  price: number;
+}

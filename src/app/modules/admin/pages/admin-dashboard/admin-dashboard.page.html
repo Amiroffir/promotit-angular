@@ -3,20 +3,19 @@
   <div class="reports-btns flex">
     <system-button
       [text]="reportTypes.UserReport"
-      [routerLink]="'/reports/' + reportTypes.UserReport"
+      [routerLink]="reportRoutes.UsersReport"
     ></system-button>
     <system-button
       [text]="reportTypes.CampaignsReport"
-      [routerLink]="'/reports/' + reportTypes.CampaignsReport"
+      [routerLink]="reportRoutes.CampaignsReport"
     ></system-button>
     <system-button
       [text]="reportTypes.TweetsReport"
-      [routerLink]="'/reports/' + reportTypes.TweetsReport"
+      [routerLink]="reportRoutes.TweetsReport"
     ></system-button>
   </div>
   <h1 class="campaigns-headline">Running Campaigns</h1>
   <div class="running-campaigns flex">
-    <!-- Should be added [cardItems]="campaigns" input from the dashboard component -->
     <cards-list [cardItems$]="campaignsList$" cardType="campaign"></cards-list>
   </div>
 </div>

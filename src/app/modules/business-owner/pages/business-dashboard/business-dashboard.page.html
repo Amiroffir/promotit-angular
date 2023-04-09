@@ -1,13 +1,12 @@
 <div class="right-top-corner flex">
   <system-button
     [text]="'Pending Deliveries'"
-    routerLink="/pending-deliveries"
+    [routerLink]="routes.pendingDeliveriesPage"
   ></system-button>
 </div>
 <div class="business-dash-wrapper flex flex-column">
   <h1 class="campaigns-headline">All Campaigns</h1>
   <div class="running-campaigns flex">
-    <!-- Should be added [cardItems]="campaigns" input from the dashboard component -->
     <cards-list
       [cardItems$]="campaignsList$"
       [cardType]="'campaign'"

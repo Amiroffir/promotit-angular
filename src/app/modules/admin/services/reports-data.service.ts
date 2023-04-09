@@ -2,33 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { SERVER_URL } from 'src/app/global-env';
-import { ITweet } from '../models/tweet.model';
-import { ISystemUser, IUserExtendedDetails } from '../models/user.model';
-
-interface IServerSystemUser {
-  userType: string;
-  userID: number;
-  fullName: string;
-  email: string;
-}
-
-interface IServerUserDetailsResponse {
-  id: number;
-  userID: number;
-  fullName: string;
-  email: string;
-  address: string;
-  phone: string;
-  earningStatus: number;
-  twitterHandle: string;
-  lastEarningsUpdate: string;
-}
-
-interface IServerTweet {
-  handle: string;
-  tweetsCount: number;
-  type: string;
-}
+import { ReportsRoutes } from '../constants/server-routes.enum';
+import { IServerTweet, ITweet } from '../models/tweet.model';
+import {
+  IServerSystemUser,
+  IServerUserDetailsResponse,
+  ISystemUser,
+  IUserExtendedDetails,
+} from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +19,7 @@ export class ReportsDataService {
 
   public getTweetsReport(): Observable<ITweet[]> {
     return this.http
-      .get<IServerTweet[]>(`${SERVER_URL}/twitter/GetTweetsReport`)
+      .get<IServerTweet[]>(`${SERVER_URL}${ReportsRoutes.GetTweetsReport}`)
       .pipe(
         map((tweets: IServerTweet[]) => {
           return tweets.map((tweet: IServerTweet) => this.toLocalTweet(tweet));
@@ -51,23 +32,25 @@ export class ReportsDataService {
   }
 
   public getUsersReport(): Observable<ISystemUser[]> {
-    return this.http.get<IServerSystemUser[]>(`${SERVER_URL}/users/Get`).pipe(
-      map((users: IServerSystemUser[]) => {
-        return users.map((user: IServerSystemUser) =>
-          this.toLocalSystemUser(user)
-        );
-      }),
-      catchError((error: Error) => {
-        console.error(error);
-        return throwError(() => new Error('Error getting users report'));
-      })
-    );
+    return this.http
+      .get<IServerSystemUser[]>(`${SERVER_URL}${ReportsRoutes.GetUsersReport}`)
+      .pipe(
+        map((users: IServerSystemUser[]) => {
+          return users.map((user: IServerSystemUser) =>
+            this.toLocalSystemUser(user)
+          );
+        }),
+        catchError((error: Error) => {
+          console.error(error);
+          return throwError(() => new Error('Error getting users report'));
+        })
+      );
   }
 
   public getUserDetails(userID: number): Observable<IUserExtendedDetails> {
     return this.http
       .get<IServerUserDetailsResponse[]>(
-        `${SERVER_URL}/users/GetUserDetails/${userID}`
+        `${SERVER_URL}${ReportsRoutes.GetUserDetails}${userID}`
       )
       .pipe(
         map((user: IServerUserDetailsResponse[]) => {

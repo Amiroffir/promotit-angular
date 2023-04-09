@@ -1,21 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  BehaviorSubject,
-  catchError,
-  Observable,
-  take,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, catchError, Observable, take } from 'rxjs';
 import { SERVER_URL } from 'src/app/global-env';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
-
-export interface Role {
-  id: string;
-  name: string;
-  description: string;
-}
+import { Role } from '../models/role.model';
+import { Roles } from 'src/app/constants/roles.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -30,14 +20,13 @@ export class Auth0Service {
     let user: string[] = localStorage.get<string[]>('user');
     if (user.length > 0) {
       this._isAuthenticated = true;
-      this._userEmail = localStorage.get<string>('userEmail');
       this._role = localStorage.get<string>('userRole');
     }
   }
 
   private _isAuthenticated: boolean = false;
   private _role: string = '';
-  private _userEmail: string = '';
+
   public get isAuthenticated(): boolean {
     return this._isAuthenticated;
   }
@@ -50,12 +39,12 @@ export class Auth0Service {
   }
 
   private roleSubject = new BehaviorSubject<string>('');
-
   public role$ = this.roleSubject.asObservable();
 
   public isCurrentRole(roleToCheck: string): boolean {
     return this._role === roleToCheck ? true : false;
   }
+
   public getUserRoles(userID: string | undefined): Observable<any> {
     return this.http.get(`${SERVER_URL}/roles/${userID}`).pipe(
       take(1),
@@ -83,14 +72,14 @@ export class Auth0Service {
         this.getUserRoles(user.sub).subscribe({
           next: (roles: Role[]) => {
             if (roles.length === 0) {
-              this._role = 'unknown';
+              this._role = Roles.Unknown;
             } else {
               this._role = roles[0].name;
             }
           },
           error: (err: Error) => {
             console.error(err);
-            this._role = 'unknown';
+            this._role = Roles.Unknown;
           },
           complete: () => {
             this.localStorage.set('user', user);
