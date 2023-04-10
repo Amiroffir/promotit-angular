@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ReportTypes } from 'src/app/modules/admin/enums/reportTypes.enum';
 import { ICampaign } from '../../../campaigns/models/campaign.model';
 import {
@@ -10,7 +10,10 @@ import {
   deliveryReportTemplate,
 } from '../../constants/report-types.enum';
 
-// NEED TO IMLEMENT SORTING AND FILTERING //
+enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'desc',
+}
 
 @Component({
   selector: 'report-table',
@@ -21,6 +24,9 @@ export class ReportTableComponent {
   public reportTemplate: IReportItem[] = [];
   public selectedOption: string = '';
   public propertyToFilterBy: string | undefined = '';
+  public sortDirection: string = SortDirection.Ascending;
+  public sortProperty: string = '';
+
   constructor() {}
 
   @Input() data$: Observable<any> | null = null; // The observable is of type any because it can be either an array of ICampaigns or an array of ISystemUsers or an array of ITweets
@@ -52,6 +58,14 @@ export class ReportTableComponent {
   public onSearch(searchText: string): void {
     this.selectedOption = searchText;
     this.propertyToFilterBy = '';
+  }
+
+  public onSort(sortBy: string): void {
+    this.sortProperty = sortBy;
+    this.sortDirection =
+      this.sortDirection === SortDirection.Ascending
+        ? SortDirection.Descending
+        : SortDirection.Ascending;
   }
 
   public ngOnInit(): void {

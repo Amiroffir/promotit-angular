@@ -12,6 +12,7 @@ import {
   SystemCardComponent,
 } from './components/componentsIndex';
 import { FilterByPropertyPipe } from './pipes/filter-by-property.pipe';
+import { SortByPipe } from './pipes/sort-by.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FilterByPropertyPipe } from './pipes/filter-by-property.pipe';
     ReportTableComponent,
     FilterAndSortComponent,
     FilterByPropertyPipe,
+    SortByPipe,
   ],
   imports: [
     CommonModule,

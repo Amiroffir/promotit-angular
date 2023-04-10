@@ -15,10 +15,14 @@
     <thead>
       <tr>
         <th
+          class="report-headers"
           scope="col"
           *ngFor="let item of reportTemplate"
-          [innerText]="item.header"
-        ></th>
+          (click)="onSort(item.content)"
+        >
+          {{ item.header }}
+          <i class="fa-solid fa-sort"></i>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +30,7 @@
         *ngFor="
           let dataItem of data
             | filterByProperty : selectedOption : propertyToFilterBy
+            | sortBy : sortProperty : sortDirection
         "
       >
         <ng-container *ngFor="let item of reportTemplate">
