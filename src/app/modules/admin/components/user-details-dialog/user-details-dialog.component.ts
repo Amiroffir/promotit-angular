@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { forEach } from 'underscore';
 import { listItem } from '../../models/details-list.model';
 import { IUserExtendedDetails } from '../../models/user.model';
 
@@ -19,15 +20,16 @@ export class UserDetailsDialog {
     this.user = data;
     this.init();
   }
-
   public init() {
-    this.detailsList = [
-      { title: 'Email', value: this.user.email },
-      { title: 'Address', value: this.user.address },
-      { title: 'Phone', value: this.user.phone },
-      { title: 'Twitter Handle', value: this.user.twitterHandle },
-      { title: 'Earning Status', value: this.user.earningStatus.toString() },
-      { title: 'Last Earnings Update', value: this.user.lastEarningsUpdate },
-    ];
+    forEach(this.user, (value, key) => {
+      key = this.toViewKey(key);
+      this.detailsList.push({ title: key, value: value });
+    });
+  }
+
+  private toViewKey(key: string): string {
+    return key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => {
+      return str.toUpperCase();
+    });
   }
 }

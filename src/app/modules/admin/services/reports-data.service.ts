@@ -74,15 +74,23 @@ export class ReportsDataService {
   private toUserExtendedDetails(
     serverUser: IServerUserDetailsResponse
   ): IUserExtendedDetails {
-    return {
+    const user: IUserExtendedDetails = {
       fullName: serverUser.fullName,
       email: serverUser.email,
-      address: serverUser.address,
-      phone: serverUser.phone,
-      earningStatus: serverUser.earningStatus,
-      twitterHandle: serverUser.twitterHandle,
-      lastEarningsUpdate: serverUser.lastEarningsUpdate,
     };
+    if (serverUser.earningStatus) {
+      user.earningStatus = serverUser.earningStatus;
+      user.lastEarningsUpdate = serverUser.lastEarningsUpdate;
+      user.twitterHandle = serverUser.twitterHandle;
+      user.phone = serverUser.phone;
+      user.address = serverUser.address;
+    } else if (serverUser.companyName) {
+      user.companyName = serverUser.companyName;
+    } else if (serverUser.organizationName) {
+      user.organizationName = serverUser.organizationName;
+      user.organizationUrl = serverUser.organizationUrl;
+    }
+    return user;
   }
 
   private toLocalSystemUser(serverUser: IServerSystemUser): ISystemUser {

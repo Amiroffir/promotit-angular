@@ -8,11 +8,14 @@ export interface ISystemUser {
 export interface IUserExtendedDetails {
   fullName: string;
   email: string;
-  address: string;
-  phone: string;
-  earningStatus: number;
-  twitterHandle: string;
-  lastEarningsUpdate: string;
+  address?: string;
+  phone?: string;
+  earningStatus?: number;
+  twitterHandle?: string;
+  lastEarningsUpdate?: string;
+  companyName?: string;
+  organizationUrl?: string;
+  organizationName?: string;
 }
 
 export interface IServerSystemUser {
@@ -27,9 +30,12 @@ export interface IServerUserDetailsResponse {
   userID: number;
   fullName: string;
   email: string;
-  address: string;
-  phone: string;
-  earningStatus: number;
-  twitterHandle: string;
-  lastEarningsUpdate: string;
+  address?: string;
+  phone?: string;
+  earningStatus?: number;
+  twitterHandle?: string;
+  lastEarningsUpdate?: string;
+  companyName?: string;
+  organizationUrl?: string;
+  organizationName?: string;
 }

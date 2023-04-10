@@ -8,6 +8,7 @@
   <filter-and-sort
     [reportType]="type"
     (selectionChange)="onSelectionChange($event)"
+    (searchTextChange)="onSearch($event)"
   >
   </filter-and-sort>
   <table class="table table-striped">

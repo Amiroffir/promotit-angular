@@ -20,7 +20,7 @@ import {
 export class ReportTableComponent {
   public reportTemplate: IReportItem[] = [];
   public selectedOption: string = '';
-  public propertyToFilterBy: string = '';
+  public propertyToFilterBy: string | undefined = '';
   constructor() {}
 
   @Input() data$: Observable<any> | null = null; // The observable is of type any because it can be either an array of ICampaigns or an array of ISystemUsers or an array of ITweets
@@ -46,8 +46,12 @@ export class ReportTableComponent {
     this.userDetailsClicked.emit(userID);
   }
   public onSelectionChange(selected: string): void {
-    console.log('selected', selected);
     this.selectedOption = selected;
+    this.filterDecider(this.type);
+  }
+  public onSearch(searchText: string): void {
+    this.selectedOption = searchText;
+    this.propertyToFilterBy = '';
   }
 
   public ngOnInit(): void {
@@ -58,7 +62,6 @@ export class ReportTableComponent {
         break;
       case ReportTypes.UserReport:
         this.reportTemplate = userReportTemplate;
-        this.propertyToFilterBy = 'userType';
         break;
       case ReportTypes.TweetsReport:
         this.reportTemplate = tweetReportTemplate;
@@ -70,7 +73,6 @@ export class ReportTableComponent {
         break;
     }
   }
-
   public get isCampaignsReport(): boolean {
     return this.type === ReportTypes.CampaignsReport;
   }
@@ -85,5 +87,17 @@ export class ReportTableComponent {
   }
   public get isDeliveriesReport(): boolean {
     return this.type === ReportTypes.DeliveriesReport;
+  }
+  private filterDecider(type: string): void {
+    switch (type) {
+      case ReportTypes.UserReport:
+        this.propertyToFilterBy = 'userType';
+        break;
+      case ReportTypes.TweetsReport:
+        this.propertyToFilterBy = 'type';
+        break;
+      default:
+        break;
+    }
   }
 }
