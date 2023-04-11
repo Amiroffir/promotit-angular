@@ -35,6 +35,7 @@ export class AddCampaignComponent implements OnInit {
         tap((isAdded: boolean) => {
           if (isAdded) {
             this.campaignToAdd = {} as ICampaign;
+            this._snack.openSnackBar('Campaign Added Successfully');
             this.campaignsData.campaignsListCached$.pipe(
               take(1),
               catchError((error: Error) => {

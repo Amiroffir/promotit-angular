@@ -1,4 +1,4 @@
-<div class="menu-wrapper flex flex-column">
+<div class="menu-wrapper flex flex-column" *ngIf="role$ | async">
   <ul class="menu-options-list">
     <li>
       <a class="menu-link" [routerLink]="sidebarItems.home.route">

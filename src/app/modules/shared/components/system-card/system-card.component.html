@@ -13,7 +13,6 @@
     ></h3>
     <span class="mt-1 text-center">
       <a [href]="cardDetails?.campaignUrl" class="card-text web-link">
-        <!-- <LinkIcon /> -->
         Explore Our Website
       </a>
     </span>
@@ -22,8 +21,6 @@
         [src]="cardDetails?.image"
         class="card-img img-fluid img-thumbnail img-responsive"
         alt="..."
-        width="{20}"
-        height="{150}"
       />
       <div class="operation-btn" *ngIf="isBusiness">
         <system-button
@@ -42,20 +39,14 @@
 </div>
 
 <ng-template #products>
-  <img
-    [src]="cardDetails?.image"
-    class="card-img-top"
-    alt="..."
-    width="{20}"
-    height="{175}"
-  />
+  <img [src]="cardDetails?.image" class="card-img-top" alt="..." />
   <div class="card-body">
     <h2 class="card-title mb-2" [innerText]="cardDetails?.productName"></h2>
     <h4
       class="card-subtitle mb-2 text-muted"
       [innerText]="cardDetails?.price | currency : 'USD' : 'symbol' : '1.2-2'"
     ></h4>
-    <div>
+    <div class="operation-btn">
       <system-button
         (click)="onCardButtonClicked(cardDetails?.id)"
         text="Buy Now"

@@ -14,9 +14,13 @@ export class WalletComponent implements OnInit {
     private auth: Auth0Service
   ) {}
 
-  public walletAmount$: Observable<number> | null = null;
+  public walletAmount$: Observable<number> | null = this.productsData.wallet$;
 
   public ngOnInit(): void {
     this.walletAmount$ = this.productsData.wallet$;
+  }
+
+  public refreshWallet(): void {
+    this.productsData.getWalletAmount().subscribe();
   }
 }

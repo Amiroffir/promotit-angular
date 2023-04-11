@@ -31,6 +31,7 @@ export class PendingDeliveriesPage {
         tap((updated: boolean) => {
           if (updated) {
             this._updateDelivsList();
+            this._snack.openSnackBar('Delivery updated successfully');
           }
         }),
         catchError((error: any) => {

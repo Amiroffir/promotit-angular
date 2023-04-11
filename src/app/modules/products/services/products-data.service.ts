@@ -28,9 +28,7 @@ import {
 export class ProductsDataService {
   constructor(private http: HttpClient, private auth: Auth0Service) {
     if (this.auth.role === Roles.SocialActivist) {
-      this.getWalletAmount().subscribe((amount: number) => {
-        this.walletSubject.next(amount);
-      });
+      this.getWalletAmount().subscribe();
     }
   }
 
@@ -169,6 +167,9 @@ export class ProductsDataService {
     return this.http
       .get<number>(`${SERVER_URL}${ProductsRoutes.GetWallet}${email}`)
       .pipe(
+        tap((amount: number) => {
+          this.walletSubject.next(amount);
+        }),
         catchError((error: Error) => {
           return throwError(() => new Error('Error getting wallet amount'));
         })
