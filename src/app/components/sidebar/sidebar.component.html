@@ -30,7 +30,11 @@
           <wallet></wallet>
         </a>
       </li>
-      <li>
+      <li
+        [ngClass]="{
+          'logout-padding': (role$ | async) === roles.SocialActivist
+        }"
+      >
         <a class="menu-link" (click)="logout()">
           <div>
             <i class="fa-solid fa-right-from-bracket"></i>
