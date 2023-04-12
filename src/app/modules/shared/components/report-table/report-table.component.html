@@ -1,10 +1,4 @@
 <div class="table-wrapper flex flex-column" *ngIf="data$ | async as data">
-  <!-- <filter-and-sort
-    [filterOptions]="filterOptions"
-    [sortOptions]="sortOptions"
-    (filter)="onFilter($event)"
-    (sort)="onSort($event)"
-  ></filter-and-sort> -->
   <filter-and-sort
     [reportType]="type"
     (selectionChange)="onSelectionChange($event)"

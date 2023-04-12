@@ -1,56 +1,49 @@
 <div class="card">
-  <ng-container *ngIf="isCampaign">
-    <ng-container *ngTemplateOutlet="campaign"></ng-container>
-  </ng-container>
-  <ng-container *ngIf="isProduct">
-    <ng-container *ngTemplateOutlet="products"></ng-container>
-  </ng-container>
-
-  <ng-template #campaign>
+  <ng-container *ngIf="isCampaignsGuard(cardDetails)">
     <h3
-      [innerText]="cardDetails?.campaignName"
+      [innerText]="cardDetails.campaignName"
       class="card-title text-center mt-2"
     ></h3>
     <span class="mt-1 text-center">
-      <a [href]="cardDetails?.campaignUrl" class="card-text web-link">
+      <a [href]="cardDetails.campaignUrl" class="card-text web-link">
         Explore Our Website
       </a>
     </span>
     <div class="card-body">
       <img
-        [src]="cardDetails?.image"
+        [src]="cardDetails.image"
         class="card-img img-fluid img-thumbnail img-responsive"
         alt="..."
       />
       <div class="operation-btn" *ngIf="isBusiness">
         <system-button
-          (click)="onCardButtonClicked(cardDetails?.id)"
+          (click)="onCardButtonClicked(cardDetails.id)"
           text="Donate Products"
         ></system-button>
       </div>
       <div class="operation-btn" *ngIf="isSocialActivist">
         <system-button
-          (click)="onCardButtonClicked(cardDetails?.id)"
+          (click)="onCardButtonClicked(cardDetails.id)"
           text="Promote & Shop"
         ></system-button>
       </div>
     </div>
-  </ng-template>
-</div>
+  </ng-container>
 
-<ng-template #products>
-  <img [src]="cardDetails?.image" class="card-img-top" alt="..." />
-  <div class="card-body">
-    <h2 class="card-title mb-2" [innerText]="cardDetails?.productName"></h2>
-    <h4
-      class="card-subtitle mb-2 text-muted"
-      [innerText]="cardDetails?.price | currency : 'USD' : 'symbol' : '1.2-2'"
-    ></h4>
-    <div class="operation-btn">
-      <system-button
-        (click)="onCardButtonClicked(cardDetails?.id)"
-        text="Buy Now"
-      ></system-button>
+  <ng-container *ngIf="isProductsGuard(cardDetails)">
+    <img [src]="cardDetails.image" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h2 class="card-title mb-2" [innerText]="cardDetails.productName"></h2>
+      <h4
+        class="card-subtitle mb-2 text-muted"
+        [innerText]="cardDetails.price | currency : 'USD' : 'symbol' : '1.2-2'"
+      ></h4>
+      <div class="operation-btn">
+        <system-button
+          (click)="onCardButtonClicked(cardDetails.id)"
+          text="Buy Now"
+        ></system-button>
+      </div>
     </div>
-  </div>
-</ng-template>
+  </ng-container>
+</div>

@@ -20,7 +20,7 @@ export class SocialActDashboard {
   public campaignsList$ = this.campaignsData.campaignsListCached$.pipe(
     catchError((error: any, caught: Observable<ICampaign[]>) => {
       console.error(error);
-      this.snackbar.errorSnackBar(error);
+      this.snackbar.errorSnackBar('Error getting campaigns');
       return EMPTY;
     })
   );

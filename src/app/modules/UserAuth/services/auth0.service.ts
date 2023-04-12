@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, take } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, Observable, take } from 'rxjs';
 import { SERVER_URL } from 'src/app/global-env';
 import { AuthService, User } from '@auth0/auth0-angular';
 import { LocalStorageService } from 'src/app/services/local-stroage.service';
@@ -45,12 +45,12 @@ export class Auth0Service {
     return this._role === roleToCheck ? true : false;
   }
 
-  public getUserRoles(userID: string | undefined): Observable<any> {
-    return this.http.get(`${SERVER_URL}/roles/${userID}`).pipe(
+  public getUserRoles(userID: string | undefined): Observable<Role[]> {
+    return this.http.get<Role[]>(`${SERVER_URL}/roles/${userID}`).pipe(
       take(1),
       catchError((err) => {
         console.error(err);
-        return []; // Return empty array if error occurs to redirect to login page
+        return EMPTY; // Return empty array if error occurs to redirect to login page
       })
     );
   }

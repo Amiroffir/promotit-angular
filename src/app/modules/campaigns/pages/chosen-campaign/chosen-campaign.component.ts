@@ -7,6 +7,7 @@ import { ProductsDataService } from 'src/app/modules/products/services/products-
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Roles } from 'src/app/constants/roles.enum';
+import { IProduct } from 'src/app/modules/products/models/product.model';
 
 @Component({
   selector: 'chosen-campaign',
@@ -15,7 +16,7 @@ import { Roles } from 'src/app/constants/roles.enum';
 })
 export class ChosenCampaignPage implements OnInit {
   public campaignDetails$: Observable<ICampaign> | null = null;
-  public productsList$: Observable<any> | null = null;
+  public productsList$: Observable<IProduct[]> | null = null;
   public campaignId: string = '';
   public userRole: string = '';
   public email: string = '';

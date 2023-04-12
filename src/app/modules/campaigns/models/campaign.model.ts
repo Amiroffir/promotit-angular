@@ -7,7 +7,7 @@ export interface ICampaign {
   donationsAmount: number;
   image: string;
   nonProfitRepID: string;
-  [key: string]: any;
+  [key: string]: any; // This is allowing to access any property of the object
 }
 
 export interface IServerCampaign {

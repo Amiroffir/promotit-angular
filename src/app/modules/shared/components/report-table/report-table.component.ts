@@ -2,18 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReportTypes } from 'src/app/modules/admin/enums/reportTypes.enum';
 import { ICampaign } from '../../../campaigns/models/campaign.model';
+import { SortDirection } from '../../constants/sort.enum';
 import {
   IReportItem,
   campaignReportTemplate,
   userReportTemplate,
   tweetReportTemplate,
   deliveryReportTemplate,
+  DataObservable,
 } from '../../constants/report-types.enum';
-
-enum SortDirection {
-  Ascending = 'asc',
-  Descending = 'desc',
-}
 
 @Component({
   selector: 'report-table',
@@ -29,7 +26,7 @@ export class ReportTableComponent {
 
   constructor() {}
 
-  @Input() data$: Observable<any> | null = null; // The observable is of type any because it can be either an array of ICampaigns or an array of ISystemUsers or an array of ITweets
+  @Input() data$: DataObservable | null = null;
   @Input() type: string = '';
 
   @Output() deleteCampaign: EventEmitter<number> = new EventEmitter<number>();
@@ -38,6 +35,26 @@ export class ReportTableComponent {
   @Output() deliveredClicked: EventEmitter<number> = new EventEmitter<number>();
   @Output() userDetailsClicked: EventEmitter<number> =
     new EventEmitter<number>();
+
+  public ngOnInit(): void {
+    switch (this.type) {
+      case ReportTypes.CampaignsReport:
+      case ReportTypes.MyCampaignsReport:
+        this.reportTemplate = campaignReportTemplate;
+        break;
+      case ReportTypes.UserReport:
+        this.reportTemplate = userReportTemplate;
+        break;
+      case ReportTypes.TweetsReport:
+        this.reportTemplate = tweetReportTemplate;
+        break;
+      case ReportTypes.DeliveriesReport:
+        this.reportTemplate = deliveryReportTemplate;
+        break;
+      default:
+        break;
+    }
+  }
 
   public onDeleteCampaign(id: number): void {
     this.deleteCampaign.emit(id);
@@ -68,25 +85,6 @@ export class ReportTableComponent {
         : SortDirection.Ascending;
   }
 
-  public ngOnInit(): void {
-    switch (this.type) {
-      case ReportTypes.CampaignsReport:
-      case ReportTypes.MyCampaignsReport:
-        this.reportTemplate = campaignReportTemplate;
-        break;
-      case ReportTypes.UserReport:
-        this.reportTemplate = userReportTemplate;
-        break;
-      case ReportTypes.TweetsReport:
-        this.reportTemplate = tweetReportTemplate;
-        break;
-      case ReportTypes.DeliveriesReport:
-        this.reportTemplate = deliveryReportTemplate;
-        break;
-      default:
-        break;
-    }
-  }
   public get isCampaignsReport(): boolean {
     return this.type === ReportTypes.CampaignsReport;
   }
@@ -102,6 +100,7 @@ export class ReportTableComponent {
   public get isDeliveriesReport(): boolean {
     return this.type === ReportTypes.DeliveriesReport;
   }
+
   private filterDecider(type: string): void {
     switch (type) {
       case ReportTypes.UserReport:
