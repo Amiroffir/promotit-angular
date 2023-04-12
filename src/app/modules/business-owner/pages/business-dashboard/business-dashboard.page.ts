@@ -12,13 +12,14 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./business-dashboard.page.less'],
 })
 export class BusinessDashboard {
+  public routes = BusinessRoutes;
+
   constructor(
     private router: Router,
     private campaignsData: CampaignsDataService,
     private _snack: SnackbarService
   ) {}
 
-  public routes = BusinessRoutes;
   public campaignsList$: Observable<ICampaign[]> =
     this.campaignsData.campaignsListCached$.pipe(
       catchError((error: any, caught: Observable<ICampaign[]>) => {

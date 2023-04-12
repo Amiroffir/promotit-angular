@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, catchError, EMPTY, take, tap } from 'rxjs';
+import { BaseManager } from 'src/app/components/base-manager/base-manager.component';
 import { ReportTypes } from 'src/app/modules/admin/enums/reportTypes.enum';
 import { EditCampaignDialog } from 'src/app/modules/campaigns/components/edit-campaign-dialog/edit-campaign-dialog.component';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
@@ -13,7 +14,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './my-campaigns.page.html',
   styleUrls: ['./my-campaigns.page.less'],
 })
-export class MyCampaignsPage implements OnInit {
+export class MyCampaignsPage extends BaseManager implements OnInit {
   private _userEmail: string = '';
   public reportType: string = ReportTypes.MyCampaignsReport;
   public myCampaignsList$: Observable<ICampaign[]> | null = null;
@@ -24,8 +25,10 @@ export class MyCampaignsPage implements OnInit {
     private dialog: MatDialog,
     private _snack: SnackbarService
   ) {
+    super();
     this._userEmail = this.auth.userEmail;
   }
+
   public ngOnInit(): void {
     this.myCampaignsList$ = this.campaignsData
       .getMyCampaigns(this._userEmail)
@@ -49,7 +52,7 @@ export class MyCampaignsPage implements OnInit {
   }
 
   public updateCampaign(campaign: ICampaign): void {
-    this.campaignsData
+    const updateCampaignSub = this.campaignsData
       .updateCampaign(campaign)
       .pipe(
         tap((updated: boolean) => {
@@ -74,10 +77,11 @@ export class MyCampaignsPage implements OnInit {
         })
       )
       .subscribe();
+    this.subscriptionsManager.push(updateCampaignSub);
   }
 
   public deleteCampaign(id: number): void {
-    this.campaignsData
+    const deleteCampaignSub = this.campaignsData
       .deleteCampaign(id)
       .pipe(
         tap((deleted: boolean) => {
@@ -102,5 +106,6 @@ export class MyCampaignsPage implements OnInit {
         })
       )
       .subscribe();
+    this.subscriptionsManager.push(deleteCampaignSub);
   }
 }

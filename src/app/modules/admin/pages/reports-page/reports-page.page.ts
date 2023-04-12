@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, EMPTY, Observable, take } from 'rxjs';
+import { BaseManager } from 'src/app/components/base-manager/base-manager.component';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -16,14 +17,16 @@ import { ReportsDataService } from '../../services/reports-data.service';
   templateUrl: './reports-page.page.html',
   styleUrls: ['./reports-page.page.less'],
 })
-export class ReportsPage {
+export class ReportsPage extends BaseManager {
   constructor(
     private route: ActivatedRoute,
     private campaignsData: CampaignsDataService,
     private usersData: ReportsDataService,
     private dialog: MatDialog,
     private _snack: SnackbarService
-  ) {}
+  ) {
+    super();
+  }
 
   public reportType: string = '';
   public reportData$: Observable<
@@ -32,6 +35,7 @@ export class ReportsPage {
 
   public ngOnInit(): void {
     this.reportType = this.route.snapshot.params['reportType'];
+
     switch (this.reportType) {
       case ReportTypes.CampaignsReport:
         this.reportData$ = this.campaignsData.campaignsListCached$.pipe(
@@ -66,7 +70,7 @@ export class ReportsPage {
   }
 
   public showUserDetails(userID: number): void {
-    this.usersData
+    const userDetailsSub = this.usersData
       .getUserDetails(userID)
       .pipe(
         take(1),
@@ -78,6 +82,7 @@ export class ReportsPage {
       .subscribe((user: IUserExtendedDetails) => {
         this.openUserDetailsDialog(user);
       });
+    this.subscriptionsManager.push(userDetailsSub);
   }
 
   public openUserDetailsDialog(user: IUserExtendedDetails): void {

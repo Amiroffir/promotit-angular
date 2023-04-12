@@ -11,10 +11,12 @@ import { ObservableCardItems } from '../../constants/report-types.enum';
   styleUrls: ['./cards-list.component.less'],
 })
 export class CardsListComponent {
+  public userRole: string = '';
+
   constructor(private auth: Auth0Service) {
     this.userRole = this.auth.role;
   }
-  public userRole: string = '';
+
   @Input() cardItems$: ObservableCardItems | null = from([]);
   @Input() cardType: string = '';
 

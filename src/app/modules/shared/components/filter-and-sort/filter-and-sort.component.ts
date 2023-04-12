@@ -12,6 +12,7 @@ export class FilterAndSortComponent implements OnInit {
   private _filtered: boolean = false;
   public options: string[] = [];
   public ReportTypes = ReportTypes;
+
   constructor() {}
 
   @Input() reportType: string = '';

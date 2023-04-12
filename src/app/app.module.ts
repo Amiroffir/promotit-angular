@@ -19,6 +19,7 @@ import {
   NonProfitModule,
   UserAuthModule,
 } from './modules/modulesIndex';
+import { BaseManager } from './components/base-manager/base-manager.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {
     LoadingComponent,
     AboutPage,
     ContactUsPage,
+    BaseManager,
   ],
   imports: [
     BrowserModule,

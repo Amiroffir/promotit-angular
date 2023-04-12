@@ -11,11 +11,13 @@ import { NonProfitRoutes } from '../../enums/nonProfitRoutes.enum';
   styleUrls: ['./non-profit-dashboard.page.less'],
 })
 export class NonProfitDashboard {
+  public routes = NonProfitRoutes;
+
   constructor(
     private campaignsData: CampaignsDataService,
     private _snack: SnackbarService
   ) {}
-  public routes = NonProfitRoutes;
+
   public campaignsList$: Observable<ICampaign[]> =
     this.campaignsData.campaignsListCached$.pipe(
       catchError((error: any, caught: Observable<ICampaign[]>) => {

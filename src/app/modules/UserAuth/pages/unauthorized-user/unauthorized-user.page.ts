@@ -10,11 +10,13 @@ import { Auth0Service } from '../../services/auth0.service';
   styleUrls: ['./unauthorized-user.page.less'],
 })
 export class UnauthorizedUserComponent {
+  public routes = AppRoutes;
+  public isauth: boolean;
+
   constructor(private auth: Auth0Service, private router: Router) {
     this.isauth = auth.isAuthenticated;
   }
-  public routes = AppRoutes;
-  public isauth: boolean;
+
   public onLoginClick(): void {
     this.auth.login();
   }

@@ -160,6 +160,8 @@ export class ProductsDataService {
   }
 
   public getWalletAmount(): Observable<number> {
+    console.log('getting wallet amount');
+
     const email = this.auth.userEmail;
     if (!email || email.length < 1) {
       return throwError(() => new Error('Error getting wallet amount'));
@@ -168,8 +170,11 @@ export class ProductsDataService {
       .get<number>(`${SERVER_URL}${ProductsRoutes.GetWallet}${email}`)
       .pipe(
         tap((amount: number) => {
+          console.log(amount);
+
           this.walletSubject.next(amount);
         }),
+        take(1),
         catchError((error: Error) => {
           return throwError(() => new Error('Error getting wallet amount'));
         })

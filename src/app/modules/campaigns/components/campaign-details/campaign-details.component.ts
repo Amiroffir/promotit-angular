@@ -10,9 +10,11 @@ import { Roles } from 'src/app/constants/roles.enum';
 })
 export class CampaignDetailsComponent {
   public role: string = '';
+
   constructor(private auth: Auth0Service) {
     this.role = this.auth.role;
   }
+
   @Input() campaign$: Observable<ICampaign> | null = null;
 
   public get isActivist(): boolean {

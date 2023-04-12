@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, EMPTY, take, tap } from 'rxjs';
+import { BaseManager } from 'src/app/components/base-manager/base-manager.component';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { IProduct } from '../../models/product.model';
@@ -11,15 +12,18 @@ import { ProductsDataService } from '../../services/products-data.service';
   templateUrl: './products-donation.component.html',
   styleUrls: ['./products-donation.component.less'],
 })
-export class ProductsDonationComponent {
+export class ProductsDonationComponent extends BaseManager {
   public product: IProduct = {} as IProduct;
   public productsToDonate: IProduct[] = [];
+
   constructor(
     private auth: Auth0Service,
     private route: ActivatedRoute,
     private productsData: ProductsDataService,
     private _snackBar: SnackbarService
-  ) {}
+  ) {
+    super();
+  }
 
   public addToProductsList(): void {
     if (!this.validateProduct()) {
@@ -42,7 +46,7 @@ export class ProductsDonationComponent {
       product.donatedBy = this.auth.userEmail;
       product.donatedTo = this.route.snapshot.params['id'];
     });
-    this.productsData
+    const addDonatedProductsSub = this.productsData
       .addDonatedProducts(this.productsToDonate)
       .pipe(
         tap((isAdded: boolean) => {
@@ -59,6 +63,7 @@ export class ProductsDonationComponent {
         take(1)
       )
       .subscribe();
+    this.subscriptionsManager.push(addDonatedProductsSub);
   }
 
   private validateProduct(): boolean {

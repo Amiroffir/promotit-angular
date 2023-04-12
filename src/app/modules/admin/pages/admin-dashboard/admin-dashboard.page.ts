@@ -12,10 +12,14 @@ import { ReportTypes } from '../../enums/reportTypes.enum';
   styleUrls: ['./admin-dashboard.page.less'],
 })
 export class AdminDashboard {
+  public reportRoutes = ReportsRoutes;
+  public reportTypes = ReportTypes;
+
   constructor(
     private campaignsData: CampaignsDataService,
     private _snack: SnackbarService
   ) {}
+
   public campaignsList$: Observable<ICampaign[]> =
     this.campaignsData.campaignsListCached$.pipe(
       catchError((error: any, caught: Observable<ICampaign[]>) => {
@@ -24,7 +28,4 @@ export class AdminDashboard {
         return EMPTY;
       })
     );
-
-  public reportRoutes = ReportsRoutes;
-  public reportTypes = ReportTypes;
 }

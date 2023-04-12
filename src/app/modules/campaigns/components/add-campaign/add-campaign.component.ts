@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, EMPTY, take, tap } from 'rxjs';
+import { BaseManager } from 'src/app/components/base-manager/base-manager.component';
 import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { CampaignHeaders } from '../../constants/campaignForm.constant';
@@ -11,14 +12,17 @@ import { CampaignsDataService } from '../../services/campaigns-data.service';
   templateUrl: './add-campaign.component.html',
   styleUrls: ['./add-campaign.component.less'],
 })
-export class AddCampaignComponent implements OnInit {
+export class AddCampaignComponent extends BaseManager implements OnInit {
   public campaignToAdd: ICampaign = {} as ICampaign;
   public campaignHeaders = CampaignHeaders;
+
   constructor(
     private campaignsData: CampaignsDataService,
     private auth: Auth0Service,
     private _snack: SnackbarService
-  ) {}
+  ) {
+    super();
+  }
 
   public ngOnInit(): void {
     this.campaignToAdd.nonProfitRepID = this.auth.userEmail;
@@ -29,7 +33,7 @@ export class AddCampaignComponent implements OnInit {
       this._snack.errorSnackBar('Please fill all the fields');
       return;
     }
-    this.campaignsData
+    const addCampaignSub = this.campaignsData
       .createCampaign(this.campaignToAdd)
       .pipe(
         tap((isAdded: boolean) => {
@@ -53,6 +57,7 @@ export class AddCampaignComponent implements OnInit {
         })
       )
       .subscribe();
+    this.subscriptionsManager.push(addCampaignSub);
   }
 
   public validateForm(): boolean {
