@@ -53,7 +53,7 @@ export class ProductsDonationComponent {
         }),
         catchError((error: any) => {
           console.error(error);
-          this._snackBar.errorSnackBar('Error donating products');
+          this._snackBar.errorSnackBar(error);
           return EMPTY;
         }),
         take(1)

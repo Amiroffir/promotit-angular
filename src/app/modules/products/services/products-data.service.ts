@@ -32,7 +32,7 @@ export class ProductsDataService {
     }
   }
 
-  private _productsList: IProduct[] = []; // local list of products for fixed data extract before sending to server.
+  private _productsList: IProduct[] = []; // local list of products for extracting fixed data before sending to server.
 
   public walletSubject = new Subject<number>();
   public wallet$ = this.walletSubject.asObservable();
