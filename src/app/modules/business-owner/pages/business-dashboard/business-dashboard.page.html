@@ -9,7 +9,6 @@
   <div class="running-campaigns flex">
     <cards-list
       [cardItems$]="campaignsList$"
-      [cardType]="'campaign'"
       (cardButtonClicked)="onCardButtonClicked($event)"
     ></cards-list>
   </div>

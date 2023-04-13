@@ -5,6 +5,7 @@ import { catchError, EMPTY, Observable, take } from 'rxjs';
 import { BaseManager } from 'src/app/components/base-manager/base-manager.component';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { DataObservable } from 'src/app/modules/shared/constants/report-types.enum';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserDetailsDialog } from '../../components/user-details-dialog/user-details-dialog.component';
 import { ReportTypes } from '../../enums/reportTypes.enum';
@@ -29,9 +30,7 @@ export class ReportsPage extends BaseManager {
   }
 
   public reportType: string = '';
-  public reportData$: Observable<
-    ICampaign[] | ISystemUser[] | ITweet[]
-  > | null = null;
+  public reportData$: DataObservable | null = null;
 
   public ngOnInit(): void {
     this.reportType = this.route.snapshot.params['reportType'];
@@ -69,6 +68,7 @@ export class ReportsPage extends BaseManager {
     }
   }
 
+  // Get the user details and open the dialog
   public showUserDetails(userID: number): void {
     const userDetailsSub = this.usersData
       .getUserDetails(userID)

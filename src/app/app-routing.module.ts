@@ -6,8 +6,11 @@ import { AdminAuthGuard } from './modules/admin/guards/admin-auth.guard';
 import { BusinessAuthGuard } from './modules/business-owner/guards/business-auth.guard';
 import { NonProfitAuthGuard } from './modules/non-profit/guards/non-profit-auth.guard';
 import { SocialActAuthGuard } from './modules/social-activist/guards/social-act-auth.guard';
-import { LoadingComponent } from './components/loading/loading.component';
-import { AboutPage, ContactUsPage } from './components/componentsIndex';
+import {
+  AboutPage,
+  ContactUsPage,
+  LoadingComponent,
+} from './components/componentsIndex';
 import {
   ThankYouComponent,
   UnauthorizedUserComponent,

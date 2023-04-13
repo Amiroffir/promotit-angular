@@ -23,7 +23,7 @@ export class PendingDeliveriesPage extends BaseManager {
   public delivsList$: Observable<IDelivery[]> | null = null;
 
   public ngOnInit(): void {
-    this._updateDelivsList();
+    this._updateDelivsList(); // Get the list of pending deliveries
   }
 
   public updateDelivered(serialNumber: number): void {

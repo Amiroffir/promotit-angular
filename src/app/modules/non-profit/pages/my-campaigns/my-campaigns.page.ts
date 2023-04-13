@@ -46,9 +46,11 @@ export class MyCampaignsPage extends BaseManager implements OnInit {
       width: '800px',
       data: campaign,
     });
+
     dialogRef.afterClosed().subscribe((updatedCampaign: ICampaign) => {
       this.updateCampaign(updatedCampaign);
     });
+    // Not need to be pushed to the subscriptions manager as it is managed by the dialog itself
   }
 
   public updateCampaign(campaign: ICampaign): void {

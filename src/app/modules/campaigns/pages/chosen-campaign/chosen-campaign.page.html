@@ -7,7 +7,6 @@
       <cards-list
         (cardButtonClicked)="handleBuy($event)"
         [cardItems$]="productsList$"
-        [cardType]="'product'"
       ></cards-list>
     </ng-container>
     <ng-container *ngIf="isBusiness">

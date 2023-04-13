@@ -16,7 +16,6 @@ export class SystemCardComponent {
 
   @Input() id: number = 0;
   @Input() userRole: string = '';
-  @Input() cardType: string = ''; // Will be used to determine if product/campaign
   @Input() cardDetails: CardDetails = null;
 
   @Output() cardButtonClicked: EventEmitter<string> =

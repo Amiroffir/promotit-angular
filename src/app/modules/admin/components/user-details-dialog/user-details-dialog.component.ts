@@ -28,6 +28,7 @@ export class UserDetailsDialog {
   }
 
   private toViewKey(key: string): string {
+    // For example: 'firstName' -> 'First Name'
     return key.replace(/([A-Z])/g, ' $1').replace(/^./, (str) => {
       return str.toUpperCase();
     });

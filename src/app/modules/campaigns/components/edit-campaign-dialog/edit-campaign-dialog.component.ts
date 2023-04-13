@@ -11,6 +11,7 @@ import { ICampaign } from '../../models/campaign.model';
 export class EditCampaignDialog {
   public campaignToUpdate: ICampaign = {} as ICampaign;
   public campaignHeaders = CampaignHeaders;
+
   constructor(
     public dialog: MatDialog,
 

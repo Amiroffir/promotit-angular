@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, EMPTY, Observable } from 'rxjs';
 import { ICampaign } from 'src/app/modules/campaigns/models/campaign.model';
 import { CampaignsDataService } from 'src/app/modules/campaigns/services/campaigns-data.service';
+import { SocialRoutes } from 'src/app/modules/social-activist/enums/socialRoutes.enum';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
@@ -26,6 +27,6 @@ export class SocialActDashboard {
   );
 
   public onCardButtonClicked(id: string): void {
-    this.router.navigate([`/social-activist/${id}`]);
+    this.router.navigate([`${SocialRoutes.SocialActPrefix}${id}`]);
   }
 }

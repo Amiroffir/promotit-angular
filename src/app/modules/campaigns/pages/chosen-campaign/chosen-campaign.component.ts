@@ -8,13 +8,14 @@ import { Auth0Service } from 'src/app/modules/UserAuth/services/auth0.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Roles } from 'src/app/constants/roles.enum';
 import { IProduct } from 'src/app/modules/products/models/product.model';
+import { BaseManager } from 'src/app/components/base-manager/base-manager.component';
 
 @Component({
   selector: 'chosen-campaign',
   templateUrl: './chosen-campaign.page.html',
   styleUrls: ['./chosen-campaign.page.less'],
 })
-export class ChosenCampaignPage implements OnInit {
+export class ChosenCampaignPage extends BaseManager implements OnInit {
   public campaignDetails$: Observable<ICampaign> | null = null;
   public productsList$: Observable<IProduct[]> | null = null;
   public campaignId: string = '';
@@ -28,6 +29,7 @@ export class ChosenCampaignPage implements OnInit {
     private auth: Auth0Service,
     private _snack: SnackbarService
   ) {
+    super();
     this.campaignId = this.route.snapshot.params['id'];
     this.userRole = this.auth.role;
     this.email = this.auth.userEmail;
@@ -55,7 +57,7 @@ export class ChosenCampaignPage implements OnInit {
 
   public handleBuy(pid: string): void {
     this._snack.openSnackBar('Buying product...', 'Please wait');
-    this.productsDataService
+    const handleBuySub = this.productsDataService
       .handleBuyProduct(pid, this.email)
       .pipe(
         take(1),
@@ -73,6 +75,7 @@ export class ChosenCampaignPage implements OnInit {
           }
         },
       });
+    this.subscriptionsManager.push(handleBuySub);
   }
 
   private getUpdatedProductsList(): void {

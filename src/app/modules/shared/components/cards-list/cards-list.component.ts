@@ -18,7 +18,6 @@ export class CardsListComponent {
   }
 
   @Input() cardItems$: ObservableCardItems | null = from([]);
-  @Input() cardType: string = '';
 
   @Output() cardButtonClicked: EventEmitter<string> =
     new EventEmitter<string>();

@@ -38,7 +38,7 @@ export class AddCampaignComponent extends BaseManager implements OnInit {
       .pipe(
         tap((isAdded: boolean) => {
           if (isAdded) {
-            this.campaignToAdd = {} as ICampaign;
+            this.campaignToAdd = {} as ICampaign; // reset form fields after adding campaign
             this._snack.openSnackBar('Campaign Added Successfully');
             this.campaignsData.campaignsListCached$.pipe(
               take(1),

@@ -10,10 +10,11 @@ import { Roles } from 'src/app/constants/roles.enum';
   styleUrls: ['./sidebar.component.less'],
 })
 export class SidebarComponent {
-  constructor(private auth: Auth0Service) {}
-  public role$: Observable<string> = this.auth.role$;
   public sidebarItems = sidebarItems;
   public roles = Roles;
+
+  constructor(private auth: Auth0Service) {}
+  public role$: Observable<string> = this.auth.role$;
 
   public logout() {
     this.auth.logout();
