@@ -18,13 +18,14 @@ const routes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [AdminDashboard, ReportsPage, UserDetailsDialog],
+  declarations: [AdminDashboard, ReportsPage],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
     MatDialogModule,
     MatListModule,
+    UserDetailsDialog,
   ],
   exports: [RouterModule, AdminDashboard],
   providers: [AdminAuthGuard],

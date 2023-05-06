@@ -1,12 +1,22 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { forEach } from 'underscore';
 import { listItem } from '../../models/details-list.model';
 import { IUserExtendedDetails } from '../../models/user.model';
+import { MatListModule } from '@angular/material/list';
+
+// This component is example to stand alone component that can be used in any module in the app.
+// and imports only the modules that it needs. it can import other components directly if they are stand alone components too.
 
 @Component({
   selector: 'user-details-dialog',
   templateUrl: './user-details-dialog.component.html',
+  standalone: true,
+  imports: [MatDialogModule, MatListModule], // an existing module is imported directly into a standalone component
   styleUrls: ['./user-details-dialog.component.less'],
 })
 export class UserDetailsDialog {
