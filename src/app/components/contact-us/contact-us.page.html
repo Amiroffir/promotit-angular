@@ -1,1 +1,25 @@
-<p>contact-us works!</p>
+<div class="contact-wrapper">
+  <h1 class="contact-hl">Contact Us</h1>
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="form-card">
+    <div class="card flex justify-content-center field">
+      <input type="text" pInputText formControlName="fullName" />
+    </div>
+    <div class="card flex justify-content-center field">
+      <input type="text" pInputText formControlName="email" />
+    </div>
+    <textarea
+      rows="5"
+      cols="30"
+      pInputTextarea
+      formControlName="description"
+    ></textarea>
+    <div class="submit">
+      <p-button
+        type="submit"
+        label="Submit"
+        icon="pi pi-check"
+        [disabled]="contactForm.invalid"
+      ></p-button>
+    </div>
+  </form>
+</div>
